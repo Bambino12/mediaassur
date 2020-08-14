@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReçuAttestationCedea" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a286e73c-fac8-4168-a830-77aa1f906421">
+	<parameter name="numeroPolice" class="java.lang.String"/>
+	<parameter name="sDate" class="java.lang.String"/>
+	<parameter name="eDate" class="java.lang.String"/>
+	<parameter name="assureur" class="java.lang.String"/>
+	<parameter name="assureurAddress" class="java.lang.String"/>
+	<field name="assure" class="java.lang.String"/>
+	<field name="genre" class="java.lang.String"/>
+	<field name="marque" class="java.lang.String"/>
+	<field name="immatriculation" class="java.lang.String"/>
+	<field name="profession" class="java.lang.String"/>
+	<detail>
+		<band height="506" splitType="Stretch">
+			<textField>
+				<reportElement x="390" y="214" width="100" height="30" uuid="b60b5356-2f17-4390-bba1-fa1ebae91560"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{assure}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="312" width="130" height="30" uuid="7beefa60-e650-4ee7-b658-1895a35ec8ef"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{assure}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="670" y="215" width="60" height="15" uuid="ee30d2d4-6c45-4aa6-801c-53d983cb2a59"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{eDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="37" y="291" width="110" height="12" uuid="ae849b37-9a69-448b-83d7-72032b15d8a4"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Media Assur Cote d'Ivoire"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="318" width="70" height="20" uuid="4ac550f7-fee5-45da-af7c-a55823a03f01"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="318" width="70" height="20" uuid="52d3a8fa-9478-4aad-8507-94ba3a2c0594"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{eDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="346" width="70" height="20" uuid="99711312-db07-4428-ae3b-16b341687c56"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{sDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="261" width="100" height="20" uuid="12e774ec-228e-4fe2-a67d-8abf66258b72"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{assureur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="68" y="266" width="153" height="20" uuid="5662fc70-a3f9-4c68-af5d-046295f0e7dc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{assureur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="280" width="100" height="20" uuid="557cd840-613d-49be-82ee-46489e9d2088"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{assureur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="301" width="164" height="18" uuid="2a43a1d3-6120-4af1-8823-72f3f9cdace0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{assureurAddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="247" width="100" height="18" uuid="b4d4c290-2e3e-4a61-82c2-b597dd3e14c9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{immatriculation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="320" width="60" height="15" uuid="66b32706-7d1e-4ebb-b347-43a88f3e59e1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="628" y="199" width="90" height="14" uuid="63fdea98-4410-42da-86f9-9c404df74ab1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{numeroPolice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="320" width="60" height="15" uuid="26e196bd-761c-4928-863b-0a9930358457"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{eDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="299" width="120" height="18" uuid="80e0ece0-e20e-4de0-962b-3350660ad236"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{numeroPolice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="289" width="110" height="12" uuid="c9ab0d87-5dbe-48ea-84d0-94ef307cb3cd"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Media Assur Cote d'Ivoire"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="297" width="90" height="18" uuid="4a4d67d8-2398-42b5-92e2-6372a46f537f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{numeroPolice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="264" y="234" width="80" height="15" uuid="8b1b8c47-00f3-49a4-8486-eabc528591d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{genre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="66" y="236" width="120" height="15" uuid="831c6c9f-591a-486c-ba54-fe0586d5690e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{genre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="219" width="107" height="15" uuid="60ca0a84-1f43-40f4-9c02-283d9793c93a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{immatriculation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="222" width="110" height="15" uuid="fb97bb0a-c323-409d-9f85-a236dced29bc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{immatriculation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="193" width="165" height="25" uuid="41fb74ef-77bf-4efe-b0a1-0e4a8b46cab8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{assure}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="196" width="140" height="25" uuid="68614c8b-b25d-4287-ba8f-2c40103a3c49"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{assure}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="610" y="215" width="50" height="15" uuid="18c7d1ba-6cd6-45cf-8eff-23dd6e068c1d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="242" width="80" height="15" uuid="99a7d6ec-0139-43b2-afdd-40b1e881f24d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{genre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="581" y="289" width="110" height="12" uuid="ee56a032-0d73-47d4-ac68-093a5056390d"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Media Assur Cote d'Ivoire"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
