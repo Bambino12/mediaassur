@@ -15,6 +15,7 @@ import Importation from 'pages/Importation';
 //import Sources from 'pages/hdjd';
 import Parametres from 'pages/Parametres';
 import Tags from 'pages/Tags';
+import Accueil from 'pages/Accueil';
 
 
 export default function Routes() {
@@ -25,6 +26,11 @@ export default function Routes() {
         exact
         path="/"
       />
+      {/* <PrivateRoute 
+        component={Accueil}
+        exact
+        path="/"
+      /> */}
       <PrivateRoute 
         component={Parametres}
         exact

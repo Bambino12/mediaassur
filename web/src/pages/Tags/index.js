@@ -7,6 +7,7 @@ import axios from 'axios';
 import { MDBDataTable } from 'mdbreact';
 import { Option, Select } from 'antd';
 import Form from 'antd/lib/form/Form';
+import {API_BASE_URL} from '../../constant'
 
 const useStyles = makeStyles(styles)
 
@@ -31,7 +32,7 @@ class Reporting extends Component{
 }
 
   getAllAssureurs = () => {
-    axios.get('http://localhost:8080/v1/assureurs')
+    axios.get(API_BASE_URL  + '/assureurs')
       .then(res=>{
           //console.log("response get Assureurs ", res);
           
@@ -42,7 +43,7 @@ class Reporting extends Component{
 
   
 getAllAssures = () => {
-    axios.get('http://localhost:8080/v1/assures')
+    axios.get(API_BASE_URL  + '/assures')
         .then(res=>{
             //console.log("response get Assures ", res);
             this.setState(({listAssures: res.data, isLoad: true}));
@@ -50,7 +51,7 @@ getAllAssures = () => {
   }  
   
   getAttestation = () => {
-    axios.get('http://localhost:8080/v1/attestations')
+    axios.get(API_BASE_URL  + '/attestations')
         .then(res=>{
             //console.log("response get attestation ", res.data);
             this.setState(({listAttestation: res.data, attestationLoad: false}));
@@ -153,109 +154,24 @@ afficheTableau = () => {
             },
         ],
         rows : this.afficheTableau()
-        // rows: [
-        //     {
-        //         numassur: 'AUX123412',
-        //         assurance: 'Sunu Assurances',
-        //         periode: '13/05/20-13/05/21',
-        //         debutcode: '612312',
-        //         fincode: '612415',
-        //     },
-        //     {
-        //         numassur: 'AUX346576',
-        //         assurance: 'AXA Assurances',
-        //         periode: '23/03/20-23/03/21',
-        //         debutcode: '232312',
-        //         fincode: '232415',
-        //     },
-        //     {
-        //         numassur: 'AUX097865',
-        //         assurance: 'Olivier Assurances',
-        //         periode: '04/01/20-04/01/21',
-        //         debutcode: '172312',
-        //         fincode: '172415',
-        //     },
-        //     {
-        //         numassur: 'AUX127865',
-        //         assurance: 'Saham Assurances',
-        //         periode: '17/01/20-17/01/21',
-        //         debutcode: '272312',
-        //         fincode: '272415',
-        //     },
-        //     {
-        //         numassur: 'AUX065865',
-        //         assurance: 'Alliance',
-        //         periode: '15/01/20-15/01/21',
-        //         debutcode: '245312',
-        //         fincode: '245415',
-        //     },
-        //     {
-        //         numassur: 'AUX097865',
-        //         assurance: 'Olivier Assurances',
-        //         periode: '04/01/20-04/01/21',
-        //         debutcode: '172312',
-        //         fincode: '172415',
-        //     },
-        //     {
-        //         numassur: 'AUX003865',
-        //         assurance: 'ASCOMA',
-        //         periode: '29/04/20-29/04/21',
-        //         debutcode: '172312',
-        //         fincode: '172415',
-        //     },
-        //     {
-        //         numassur: 'AUX546765',
-        //         assurance: 'Loyale Assurance',
-        //         periode: '21/04/20-21/04/21',
-        //         debutcode: '872312',
-        //         fincode: '872415',
-        //     },
-        //     {
-        //         numassur: 'AUX098865',
-        //         assurance: 'BNI',
-        //         periode: '12/02/20-12/02/21',
-        //         debutcode: '762312',
-        //         fincode: '762415',
-        //     },
-        //     {
-        //         numassur: 'AUX003879',
-        //         assurance: 'SOMAVIE',
-        //         periode: '01/05/20-01/05/21',
-        //         debutcode: '765312',
-        //         fincode: '765415',
-        //     },
-        //     {
-        //         numassur: 'AUX098765',
-        //         assurance: 'SIDAM',
-        //         periode: '11/04/20-11/04/21',
-        //         debutcode: '982312',
-        //         fincode: '892415',
-        //     },
 
-        // ]
     }; 
 
     const { Option } = Select;
         return(
             <div className="container-fluid pl-4 m-0 text-left" style={{backgroundColor:"white"}}>
                 <br/>
-                {/* <Form name="control-hooks">
-                    <Input.Group compact>
-                        <Select defaultValue="Toutes les attestations" name="select"  id="selected" onChange={this.onFinish}>
-                            <Option value="imprimes">attestations imprimees</Option>
-                            <Option value="nonImprimes">attestations non imprimees</Option>
-                        </Select>
-                    </Input.Group>
-                </Form> */}
-                <select name="selectData" id="select" onChange={this.onFinish} style={{
-                    borderRadius: "4px", borderColor: "rgba(220, 220, 220, 0.7)", height: '30px',
-                    fontSize: "13px", marginLeft: "10px", appearance: "none",
-                    }}>
-                    {/* <option value="default">Toutes les attestations</option> */}
-                    <option value="1">Attestations imprimees</option>
-                    <option value="0">Attestations non imprimees</option>
-                    <option value="2">Attestations annulees</option>
-                </select>
+                <div className="text-right">
+                    <select name="selectData" id="select" onChange={this.onFinish} style={{
+                        borderRadius: "4px", borderColor: "rgba(220, 220, 220, 0.7)", height: '30px',
+                        fontSize: "13px", marginLeft: "10px", appearance: "none",
+                        }}>
+                        {/* <option value="default">Toutes les attestations</option> */}
+                        <option value="1">Attestations imprimees</option>
+                        <option value="0">Attestations non imprimees</option>
+                        <option value="2">Attestations annulees</option>
+                    </select>
+                </div>
                 <hr/>
                 <div>
                     <MDBDataTable

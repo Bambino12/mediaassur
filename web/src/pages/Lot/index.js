@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 
 import {connect} from "react-redux";
 import makeStyles from '@material-ui/styles/makeStyles';
-import { Card, Table, Switch, Avatar, Button, Divider } from 'antd';
+import { Card, Table, Switch, Avatar, Button, Divider, Tag } from 'antd';
 import { PlusOutlined, EditOutlined, PrinterOutlined, EyeOutlined } from '@ant-design/icons';
 
 import * as Helpers from 'util/Helpers';
@@ -10,7 +10,8 @@ import { GET_USERS_FILES_CTR,STATUS_CODE_REST_API, STATUS } from 'constant';
 import { getUsers, getUser, toggleState } from 'services/user'
 import { handleService } from 'helpers'
 // import UpdateForm from './UpdateForm'
-import AddForm from './AddForm'
+import AddForm from './AddForm';
+import {API_BASE_URL} from '../../constant';
 
 import styles from './styles'
 import { getLots } from 'services/lot';
@@ -143,18 +144,12 @@ function UserList(props) {
         {
           title: 'Statut',
           key: 'statut',
+          width: 280,
           render: (item) =>(
-            <Fragment>
-            <Link to="/DetailsLot">
-                <EyeOutlined
-                    onClick={()=>localStorage.setItem("currentLotSelected",JSON.stringify(item))}
-                />
-            </Link>
-            {/* <PrinterOutlined
-                onClick={() => setState(state => ({...state, currentItem: item, isUpdateDrawerVisible: true}))}
-                style={{marginLeft:'10px'}}
-            /> */}
-        </Fragment>
+                <div>
+                   <td>{item.statusCedeao == 0 ? <Tag color="blue">Cedeao non generée</Tag> : item.statusCedeao == 1 ? <Tag color="green">Cedeao generée</Tag> : <Tag color="red">Cedeao Annulée</Tag>}</td> 
+                   <td>{item.statusJaune == 0 ? <Tag color="blue">Jaune non generée</Tag> : item.statusJaune == 1 ? <Tag color="green">Jaune generée</Tag> : <Tag color="red">Jaune Annulée</Tag>}</td>  
+                </div>
           )
         },
         {
@@ -166,7 +161,9 @@ function UserList(props) {
                 <Fragment>
                     <Link to="/DetailsLot">
                         <EyeOutlined
-                            onClick={()=>localStorage.setItem("currentLotSelected",JSON.stringify(item))}
+                            // onClick={()=>localStorage.setItem("currentLotSelected",JSON.stringify(item))}
+                            onClick={()=>localStorage.setItem("lotId",item.id)}
+
                         />
                     </Link>
                 </Fragment>

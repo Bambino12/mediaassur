@@ -5,7 +5,7 @@ import { Table, Button, Modal, Input, message} from 'antd';
 import axios from "axios";
 import Icon, { EditOutlined, DeleteOutlined, PlusOutlined, PrinterOutlined } from '@ant-design/icons';
 //import { DataTable } from 'pages/Rapport/DataTable';
-
+import {API_BASE_URL} from '../../constant'
 //import DataTable from './DataTable';
 
 class Parametre extends Component {
@@ -46,7 +46,7 @@ openModal = (openModal) => {
   this.setState({openModal});
 }
 getAllAssures(){
-  axios.get('http://localhost:8080/v1/assures')
+  axios.get(API_BASE_URL  + '/assures')
       .then(res=>{
           console.log("response get Assures ", res);
           this.setState({listAssures: res.data, isLoad: true});
@@ -54,7 +54,7 @@ getAllAssures(){
 }
 
 getAllMarque(){
-  axios.get('http://localhost:8080/v1/marque')
+  axios.get(API_BASE_URL  + '/marque')
       .then(res=>{
           console.log("response get Marque ", res);
           this.setState({listMarque: res.data, isLoad: true});
@@ -62,7 +62,7 @@ getAllMarque(){
 }
 
 getAllUsers(){
-  axios.get('http://localhost:8080/v1/users')
+  axios.get(API_BASE_URL  + '/users')
       .then(res=>{
           console.log("response get Utilisateur ", res);
           this.setState({listUser: res.data, isLoad: true});
@@ -70,7 +70,7 @@ getAllUsers(){
 }
 
 getAllAssureurs(){
-  axios.get('http://localhost:8080/v1/assureurs')
+  axios.get(API_BASE_URL  + '/assureurs')
     .then(res=>{
         console.log("response get Assureurs ", res);
         this.setState({listAssureurs: res.data, AssureursLoad: true});
@@ -110,7 +110,7 @@ CreateNewAssurreur = (e) => {
         return ;
     }
 
-  axios.post('http://localhost:8080/v1/auth/signup',item)
+  axios.post(API_BASE_URL  + '/auth/signup',item)
       .then(response => {
           console.log("Response d'ajout User ", response);
           if (response.data){
@@ -152,7 +152,7 @@ CreateNewAssurreur = (e) => {
         description:data.get('descriptionMarque'),     
     }
     console.log(item)
-    axios.post('http://localhost:8080/v1/marque',item)
+    axios.post(API_BASE_URL  + '/marque',item)
         .then(response => {
             console.log("Response de marque", response);
             if (response.data){
@@ -192,7 +192,7 @@ CreateNewAssurreur = (e) => {
     console.log(item)
     
 
-    axios.post('http://localhost:8080/v1/assures',item)
+    axios.post(API_BASE_URL  + '/assures',item)
         .then(response => {
             console.log("Response d'ajout ", response);
             if (response.data){
@@ -236,7 +236,7 @@ addAssureurs = (e) => {
   }
   console.log(item)
 
-  axios.post('http://localhost:8080/v1/assureurs',item)
+  axios.post(API_BASE_URL  + '/assureurs',item)
       .then(response => {
           console.log("Response d'ajout assureur", response);
           if (response.data){

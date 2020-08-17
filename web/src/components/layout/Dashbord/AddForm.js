@@ -8,6 +8,7 @@ import ImgCrop from 'antd-img-crop';
 import { STATUS_CODE_REST_API, USERS_ROLE } from 'constant';
 import { exeRequestFinal, exeRequest } from 'util/APIUtils';
 import axios from 'axios';
+import {API_BASE_URL} from '../../../constant'
 
 const { Option } = Select;
 
@@ -37,33 +38,17 @@ function AddForm(props) {
     setState(state => ({...state, isLoading: true }));
 
     getAllLots();
-    
-    // exeRequest("/lots", "GET", null, function(response){
-    //   console.log('response de lots ', response);
-    //   setState(state => ({
-    //     ...state, 
-    //     isLoading: false,
-    //     lots: response || []
-    //   }));
-    // })
+ 
   }, [])
   useEffect(() => {
     setState(state => ({...state, isLoading: true }));
 
     getMarque();
-    
-    // exeRequest("/marque", "GET", null, function(response){
-    //   console.log('response de marque ', response);
-    //   setState(state => ({
-    //     ...state, 
-    //     isLoading: false,
-    //     marque: response || []
-    //   }));
-    // })
+
   }, [])
 
   function getMarque(){
-    axios.get('http://localhost:8080/v1/marque')
+    axios.get(API_BASE_URL  + '/marque')
       .then(res=>{
         //console.log('response de marque ', res.data);
         setState(state => ({
@@ -75,7 +60,7 @@ function AddForm(props) {
   }
 
   function getAllLots(){
-    axios.get('http://localhost:8080/v1/lots')
+    axios.get(API_BASE_URL  + '/lots')
       .then(res=>{
         //console.log('response de lots ', res);
         //localStorage.setItem('lotsAddForm', JSON.stringify(res.data))
@@ -107,7 +92,7 @@ function AddForm(props) {
     
     console.log('element saisi ', lot);
     // console.log('list lots ', state.lots);
-    axios.post("http://localhost:8080/v1/attestations", lot)
+    axios.post(API_BASE_URL + "/attestations", lot)
       .then(response => {
           //console.log("Response d'ajout d'attestation", response);
           if (response.data){

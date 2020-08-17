@@ -16,6 +16,7 @@ import { CreditCardOutlined, FolderOpenOutlined, FundViewOutlined, PrinterOutlin
 import { handleService } from 'helpers';
 import { getLots } from 'services/lot';
 import axios from 'axios';
+import {API_BASE_URL} from 'constant'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -104,7 +105,7 @@ function App(props) {
 }, [])
 
 // function getAllAssureurs(){
-//     axios.get('http://localhost:8080/v1/assureurs')
+//     axios.get(API_BASE_URL  + '/assureurs')
 //       .then(res=>{
 //           console.log("response get Assureurs ", res);
           
@@ -115,7 +116,7 @@ function App(props) {
 
   
 // function getAllAssures(){
-//     axios.get('http://localhost:8080/v1/assures')
+//     axios.get(API_BASE_URL  + '/assures')
 //         .then(res=>{
 //             console.log("response get Assures ", res);
 //             setState(state=>({...state, listAssures: res.data, isLoad: true}));
@@ -123,7 +124,7 @@ function App(props) {
 //   }  
   
   function getAttestation(){
-    axios.get('http://localhost:8080/v1/attestations')
+    axios.get(API_BASE_URL  + '/attestations')
         .then(res=>{
             //console.log("response get attestation ", res.data);
             let attest = null;

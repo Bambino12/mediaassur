@@ -14,9 +14,10 @@ import styles from './styles'
 import { element } from 'prop-types';
 import { API_ROUTE } from 'api/routes';
 import { parseJSON } from 'jquery';
+import {API_BASE_URL} from '../../constant'
 
 const useStyles = makeStyles(styles);
-let pdf_viewer_url = "http://localhost:8080/viewer/web/viewer.html?file=";
+let pdf_viewer_url = API_BASE_URL.replace("v1", "") + "viewer/web/viewer.html?file=";
 
 
 
@@ -57,33 +58,6 @@ function CategoryList(props) {
             ...state,
             isLoading: true
         }));
-        // try {
-        //     let currentLot = JSON.parse(localStorage.getItem("currentLotSelected"));
-        //     let newLot = currentLot;
-        //     let listAttestations=currentLot.attestations;
-
-        //     for (var i =0;i <listAttestations.length; i++) {
-        //         //delete listprd[i]["listprdcmd"]; //delete property listprdcmd
-        //         listAttestations[i]["key"]="AT-"+i; // add property qteprodcmd = 1
-        //     }
-
-        //     currentLot.attestations=listAttestations;
-        //     console.log('contenu de localStorage ', state.attestations);
-        //     localStorage.setItem('attestation', JSON.stringify(listAttestations))
-
-        //     //console.log('contenu de curentLot attestations ', currentLot.attestations);
-
-        //     setState(state => ({
-        //         ...state,
-        //         lot: (newLot ? newLot : []),
-        //         currentLot: (currentLot.attestations ? currentLot.attestations : []),
-        //         lotCourant: currentLot,
-        //         isLoading: false,
-        //         attestations: listAttestations,
-        //     }))
-
-        //         //console.log('contenu de lot ', state.lot);
-        // }catch (e) {//     alert("Aucun lot selectionné")} 
         getSingleLot();
     },
         [])
@@ -95,7 +69,7 @@ function CategoryList(props) {
     // }
 
     function getSingleLot() {
-        axios.get('http://localhost:8080/v1/lots/' + localStorage.getItem('lotId'), {
+        axios.get(API_BASE_URL  + '/lots/' + localStorage.getItem('lotId'), {
             headers: { Authorization: "Bearer" + localStorage.getItem('token') }
         })
             .then(res => {
@@ -118,50 +92,50 @@ function CategoryList(props) {
 
     }
 
-    function handleDelete(category) {
-        setState(state => ({ ...state, isLoading: true }))
+    // function handleDelete(category) {
+    //     setState(state => ({ ...state, isLoading: true }))
 
-        exeRequestFinal(`/categories/${category.id}`, "DELETE", category,
-            (response) => {
-                setState((state, props) => {
-                    const { categories } = state;
+    //     exeRequestFinal(`/categories/${category.id}`, "DELETE", category,
+    //         (response) => {
+    //             setState((state, props) => {
+    //                 const { categories } = state;
 
-                    if (response.success) {
-                        notification.success({
-                            message: "Suppression de categorie",
-                            description: "La categorie a été supprimée avec succès."
-                        })
+    //                 if (response.success) {
+    //                     notification.success({
+    //                         message: "Suppression de categorie",
+    //                         description: "La categorie a été supprimée avec succès."
+    //                     })
 
-                        return ({
-                            ...state,
-                            isLoading: false,
-                            categories: categories.filter(a => a.id !== category.id)
-                        })
-                    } else {
-                        notification.error({
-                            message: "Suppression de categorie",
-                            description: "La suppression de la categorie a échouée."
-                        })
+    //                     return ({
+    //                         ...state,
+    //                         isLoading: false,
+    //                         categories: categories.filter(a => a.id !== category.id)
+    //                     })
+    //                 } else {
+    //                     notification.error({
+    //                         message: "Suppression de categorie",
+    //                         description: "La suppression de la categorie a échouée."
+    //                     })
 
-                        return ({
-                            ...state,
-                            isLoading: false,
-                            categories: categories.filter(a => a.id !== category.id)
-                        })
-                    }
-                });
-            },
-            (error) => {
-                notification.error({
-                    message: "Suppression de categorie",
-                    description: "La suppression de la categorie a échouée."
-                })
+    //                     return ({
+    //                         ...state,
+    //                         isLoading: false,
+    //                         categories: categories.filter(a => a.id !== category.id)
+    //                     })
+    //                 }
+    //             });
+    //         },
+    //         (error) => {
+    //             notification.error({
+    //                 message: "Suppression de categorie",
+    //                 description: "La suppression de la categorie a échouée."
+    //             })
 
-                setState(state => ({ ...state, isLoading: false }))
-            },
-            this
-        )
-    }
+    //             setState(state => ({ ...state, isLoading: false }))
+    //         },
+    //         this
+    //     )
+    // }
 
     function handleClose(category) {
         if (category) {
@@ -328,7 +302,7 @@ function CategoryList(props) {
         //API_ROUTE + "/lots/" + state.lotCourant.id + "/generate/?type=" + type + "&numero=" + numero
         let currentItem = JSON.parse(localStorage.getItem('currentAttestationSelected'));
         //console.log('contenu de currentItem ', currentItem);
-        axios.get(API_ROUTE + "/attestations/" + currentItem.id + "/generate/?type=" + type + "&numero=" + state.input)
+        axios.get(API_BASE_URL + "/attestations/" + currentItem.id + "/generate/?type=" + type + "&numero=" + state.input)
             .then(res => {
                 //console.log('lot courant ', currentItem.id);
                 if (res) {
@@ -353,7 +327,6 @@ function CategoryList(props) {
                 }
             })
     };
-
 
     // function jauneHandleChange(e){
 
@@ -392,7 +365,6 @@ function CategoryList(props) {
             render: (item) => (
                 <div>
                     <td>{item.statusCedeao == 0 ? <Tag color="blue">Cedeao non generée  </Tag> : item.statusCedeao == 1 ? <Tag color="green">Cedeao generée</Tag> : <Tag color="red">Cedeao Annulée</Tag>}</td> <td>{item.statusJaune == 0 ? <Tag color="blue">Jaune non generée</Tag> : item.statusJaune == 1 ? <Tag color="green">Jaune generée</Tag> : <Tag color="red">Jaune Annulée</Tag>}</td>
-
                 </div>
             )
         },

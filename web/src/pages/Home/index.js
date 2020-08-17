@@ -162,7 +162,7 @@ function UserList(props) {
             
         },
         {
-            title: 'Date de fin ',
+            title: 'Date de fin',
             key: 'endDate',
             width: 300,
             render: (text, item) => item.endDate || ""
@@ -178,9 +178,8 @@ function UserList(props) {
             width: 280,
             render: (item) => (
                 <div>
-                   <td>{item.statusCedeao == 0 ? <Tag color="blue">Cedeao non generée  </Tag> : item.statusCedeao == 1 ? <Tag color="green">Cedeao generée</Tag> : <Tag color="red">Cedeao Annulée</Tag>}</td> 
-                   <td>{item.statusJaune == 0 ? <Tag color="blue">Jaune non generée</Tag> : item.statusJaune == 1 ? <Tag color="green">Jaune generée</Tag> : <Tag color="red">Jaune Annulée</Tag>}</td>
-                    
+                   <td>{item.statusCedeao == 0 ? <Tag color="blue">Cedeao non generée</Tag> : item.statusCedeao == 1 ? <Tag color="green">Cedeao generée</Tag> : <Tag color="red">Cedeao Annulée</Tag>}</td> 
+                   <td>{item.statusJaune == 0 ? <Tag color="blue">Jaune non generée</Tag> : item.statusJaune == 1 ? <Tag color="green">Jaune generée</Tag> : <Tag color="red">Jaune Annulée</Tag>}</td>  
                 </div>
             )
           },
@@ -193,14 +192,15 @@ function UserList(props) {
                 <Fragment>
                     <Link to="/DetailsLot">
                         <EyeOutlined
-                            onClick={()=>localStorage.setItem("lotId",item.id)}
+                    onClick={()=>localStorage.setItem("currentLotSelected",JSON.stringify(item))}
+
+                           // onClick={()=>localStorage.setItem("lotId",item.id)}
                         />
                     </Link>
                     {/* <PrinterOutlined
                         onClick={() => setState(state => ({...state, currentItem: item, isUpdateDrawerVisible: true}))}
                         style={{marginLeft:'10px'}}
-                    /> */}
-                   
+                    /> */}  
                 </Fragment>
             )
         },
