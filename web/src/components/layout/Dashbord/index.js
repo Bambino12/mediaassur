@@ -13,7 +13,7 @@ const { SubMenu } = Menu;
 export default function Sider(props) {
 
     const[state, setState] = useState({
-        currentItem: {}, 
+        currentItem: {},
         isAddDrawerVisible: false,
     })
     const history = useHistory()

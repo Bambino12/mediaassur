@@ -2,8 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 
 import {connect} from "react-redux";
 import makeStyles from '@material-ui/styles/makeStyles';
-import { Card, Table, Switch, Avatar, Button, Divider, Tag } from 'antd';
-import { PlusOutlined, EditOutlined, PrinterOutlined, EyeOutlined } from '@ant-design/icons';
+import { Card, Table, Switch, Avatar, Button, Divider, Tag, Space } from 'antd';
+import { PlusOutlined, EditOutlined, PrinterOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
 
 import * as Helpers from 'util/Helpers';
 import { GET_USERS_FILES_CTR,STATUS_CODE_REST_API, STATUS } from 'constant';
@@ -15,18 +15,26 @@ import AddForm from './AddForm'
 import styles from './styles'
 import { getLots } from 'services/lot';
 import { Link } from 'react-router-dom';
+import { Input } from '@material-ui/core';
+import Highlighter from 'react-highlight-words';
 
 const useStyles = makeStyles(styles)
 
 function UserList(props) {
-    const [state, setState] = useState({
-        listLot: [], 
-        isLoading: true,
-        isUpdateDrawerVisible: false,
-        isAddDrawerVisible: false,
-        currentItem: {},
-        lot: JSON.parse(localStorage.getItem("currentLotSelected")),
-    })
+    const [state, setState] = useState(
+                {
+                listLot: [], 
+                isLoading: true,
+                isUpdateDrawerVisible: false,
+                isAddDrawerVisible: false,
+                currentItem: {},
+                lot: JSON.parse(localStorage.getItem("currentLotSelected")),
+                searchText: '',
+                searchedColumn: '',
+                searchInput:"",
+                dataIndex: "",
+                }
+    )
 
     const classes = useStyles()
     //console.log("contenu du state ", state);
@@ -117,94 +125,204 @@ function UserList(props) {
             setState(state => ({...state, isAddDrawerVisible: false}))
         }
     }
+    // seach
+   function getColumnSearchProps (dataIndex, searchInput) {
+       return(
+           {
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+          <div style={{ padding: 8 }}>
+            <Input
+              ref={node => {
+                searchInput = node;
+              }}
+              placeholder={`Search ${dataIndex}`}
+              value={selectedKeys[0]}
+              onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+              onPressEnter={handleSearch(selectedKeys, confirm, dataIndex)}
+              style={{ width: 188, marginBottom: 8, display: 'block' }}
+            />
+            <Space>
+              <Button
+                type="primary"
+                onClick={handleSearch(selectedKeys, confirm, dataIndex)}
+                icon={<SearchOutlined/>}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Search
+              </Button>
+              <Button onClick={handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+                Reset
+              </Button>
+            </Space>
+          </div>
+        ),
+        filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+        onFilter: (value, record) =>
+          record[dataIndex] ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) : '',
+        onFilterDropdownVisibleChange: visible => {
+          if (visible) {
+            setTimeout(searchInput.select(), 100);
+          }
+        },
+        render: text =>
+          state.searchedColumn === dataIndex ? (
+            <Highlighter
+              highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+              searchWords={[state.searchText]}
+              autoEscape
+              textToHighlight={text ? text.toString() : ''}
+            />
+          ) : (
+            text
+          ),
+      })};
 
-    // function addStatut(){
-    //     for(let i=0; i<=state.lot.length; i++){
-    //         if(state.lot[i].status === 0){
-    //             console.log('le statut 0', state.lot[i].status);
-    //             return<Tag color="blue">Non imprimé</Tag>
-            
-    //         }
-    //         else if(state.lot[i].status === 0 ){
-    //             console.log('le statut 1', state.lot[i].status);
-    //             return <Tag color="green">Imprimé</Tag>
-    //         }
-    //         else if(state.lot[i].status = 2){
-    //             console.log('le statut 2', state.lot[i].status);
-    //             return <Tag color="red">Annulé</Tag>
-    //         }
-    //     }
-    // }
+   function handleSearch (selectedKeys, confirm, dataIndex) {
+        confirm();
+        setState({
+          searchText: selectedKeys[0],
+          searchedColumn: dataIndex,
+        });
+      };
     
+     function handleReset (clearFilters) {
+        clearFilters();
+        setState({ searchText: '' });
+      };
+
     const columns = [
         {
-            title: 'N° de police',
-            key: 'numeroPolice',
-            width: 150,
-            render: (text, item) => item.numeroPolice || ""
+          title: 'N° de police',
+          dataIndex: 'numeroPolice',
+          key: 'name',
+          width: '25%',
         },
         {
-            title: 'Assureur',
-            key: 'assureur',
-            width: 200,
-            render: (text, item) => item.assureur || ""
+          title: 'Assureur',
+          dataIndex: 'assureur',
+          key: 'assureur',
+          width: '20%',
         },
         {
-            title: 'Assuré',
-            key: 'assure',
-            render: (text, item) => item.assure || ""
+          title: 'Assuré',
+          dataIndex: 'assure',
+          key: 'assure',
+          width: '20%',
+        //   ...getColumnSearchProps('assure'),
         },
         {
-            title: 'Date de debut',
-            key: 'startDate',
-            width: 300,
-            render: (text, item) => item.startDate || ""
+          title: 'Date de debut',
+          dataIndex: 'startDate',
+          key: 'startDate',
+          width: '20%',
+        },
+        {
+          title: 'Date de fin',
+          dataIndex: 'endDate',
+          key: 'endDate',
+          width: '20%',
+        },
+        {
+          title: 'Nb attestation',
+          dataIndex: 'nbAttestation',
+          key: 'nbAttestation',
+          width: '20%'
+        },
+        {
+          title: 'Statut',
+          dataIndex: 'statut',
+          key: 'statut',
+          width: '20%',
+          // render: (item) => (
+          //     <div>
+          //        <td>{item.statusCedeao == 0 ? <Tag color="blue">Cedeao non generée</Tag> : item.statusCedeao == 1 ? <Tag color="green">Cedeao generée</Tag> : <Tag color="red">Cedeao Annulée</Tag>}</td> 
+          //        <td>{item.statusJaune == 0 ? <Tag color="blue">Jaune non generée</Tag> : item.statusJaune == 1 ? <Tag color="green">Jaune generée</Tag> : <Tag color="red">Jaune Annulée</Tag>}</td>  
+          //     </div>
+          // )
+        },
+      {
+          title:  "Actions",
+          key: 'actions',
+          fixed: 'right',
+          width: '20%',
+          render: (item) => (
+              <Fragment>
+                  <Link to="/DetailsLot">
+                      <EyeOutlined
+                  onClick={()=>localStorage.setItem("lotId", item.id)}
+                         // onClick={()=>localStorage.setItem("lotId",item.id)}
+                      />
+                  </Link> 
+              </Fragment>
+          )
+      },
+      ];
+    // const columns = [
+    //     {
+    //         title: 'N° de police',
+    //         key: 'numeroPolice',
+    //         width: 150,
+    //         render: (text, item) => item.numeroPolice || ""
+    //     },
+        
+    //     {
+    //         title: 'Assureur',
+    //         key: 'assureur',
+    //         width: 200,
+    //         render: (text, item) => item.assureur || ""
+    //     },
+    //     {
+    //         title: 'Assuré',
+    //         key: 'assure',
+    //         render: (text, item) => item.assure || ""
+    //     },
+    //     {
+    //         title: 'Date de debut',
+    //         key: 'startDate',
+    //         width: 300,
+    //         render: (text, item) => item.startDate || ""
             
-        },
-        {
-            title: 'Date de fin',
-            key: 'endDate',
-            width: 300,
-            render: (text, item) => item.endDate || ""
-        },
-        {
-            title: 'Nb attestation',
-            key: 'nbAttestation',
-            render: (text, item) => item.nbAttestation || ""
-        },
-        {
-            title: 'Statut',
-            key: 'statut',
-            width: 280,
-            render: (item) => (
-                <div>
-                   <td>{item.statusCedeao == 0 ? <Tag color="blue">Cedeao non generée</Tag> : item.statusCedeao == 1 ? <Tag color="green">Cedeao generée</Tag> : <Tag color="red">Cedeao Annulée</Tag>}</td> 
-                   <td>{item.statusJaune == 0 ? <Tag color="blue">Jaune non generée</Tag> : item.statusJaune == 1 ? <Tag color="green">Jaune generée</Tag> : <Tag color="red">Jaune Annulée</Tag>}</td>  
-                </div>
-            )
-          },
-        {
-            key: 'actions',
-            title:  "Actions",
-            fixed: 'right',
-            width: 90,
-            render: (text, item) => (
-                <Fragment>
-                    <Link to="/DetailsLot">
-                        <EyeOutlined
-                    onClick={()=>localStorage.setItem("currentLotSelected",JSON.stringify(item))}
-
-                           // onClick={()=>localStorage.setItem("lotId",item.id)}
-                        />
-                    </Link>
-                    {/* <PrinterOutlined
-                        onClick={() => setState(state => ({...state, currentItem: item, isUpdateDrawerVisible: true}))}
-                        style={{marginLeft:'10px'}}
-                    /> */}  
-                </Fragment>
-            )
-        },
-    ];
+    //     },
+    //     {
+    //         title: 'Date de fin',
+    //         key: 'endDate',
+    //         width: 300,
+    //         render: (text, item) => item.endDate || ""
+    //     },
+    //     {
+    //         title: 'Nb attestation',
+    //         key: 'nbAttestation',
+    //         render: (text, item) => item.nbAttestation || ""
+    //     },
+    //     {
+    //         title: 'Statut',
+    //         key: 'statut',
+    //         width: 280,
+    //         render: (item) => (
+    //             <div>
+    //                <td>{item.statusCedeao == 0 ? <Tag color="blue">Cedeao non generée</Tag> : item.statusCedeao == 1 ? <Tag color="green">Cedeao generée</Tag> : <Tag color="red">Cedeao Annulée</Tag>}</td> 
+    //                <td>{item.statusJaune == 0 ? <Tag color="blue">Jaune non generée</Tag> : item.statusJaune == 1 ? <Tag color="green">Jaune generée</Tag> : <Tag color="red">Jaune Annulée</Tag>}</td>  
+    //             </div>
+    //         )
+    //       },
+    //     {
+    //         key: 'actions',
+    //         title:  "Actions",
+    //         fixed: 'right',
+    //         width: 90,
+    //         render: (item) => (
+    //             <Fragment>
+    //                 <Link to="/DetailsLot">
+    //                     <EyeOutlined
+    //                 onClick={()=>localStorage.setItem("lotId", item.id)}
+    //                        // onClick={()=>localStorage.setItem("lotId",item.id)}
+    //                     />
+    //                 </Link> 
+    //             </Fragment>
+    //         )
+    //     },
+    // ];
 
     return (
         <Fragment>

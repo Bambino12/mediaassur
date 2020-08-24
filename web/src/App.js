@@ -98,30 +98,11 @@ function App(props) {
         () => {setState(state => ({...state, isLoading: false,}))}
     );
     
-    // getAllAssures();
-    // getAllAssureurs();
+
     getAttestation();
 
 }, [])
 
-// function getAllAssureurs(){
-//     axios.get(API_BASE_URL  + '/assureurs')
-//       .then(res=>{
-//           console.log("response get Assureurs ", res);
-          
-//           console.log('le state ',state);
-//           setState(state=>({...state, listAssureurs: res.data, AssureursLoad: true}));
-//       });
-//   }
-
-  
-// function getAllAssures(){
-//     axios.get(API_BASE_URL  + '/assures')
-//         .then(res=>{
-//             console.log("response get Assures ", res);
-//             setState(state=>({...state, listAssures: res.data, isLoad: true}));
-//         });
-//   }  
   
   function getAttestation(){
     axios.get(API_BASE_URL  + '/attestations')

@@ -157,7 +157,7 @@ function UserList(props) {
             title:  "Actions",
             fixed: 'right',
             width: 90,
-            render: (text, item) => (
+            render: (item) => (
                 <Fragment>
                     <Link to="/DetailsLot">
                         <EyeOutlined

@@ -101,9 +101,7 @@ afficheTableau = () => {
         return this.state.nonImprimes
     }
     else 
-        return this.state.annules
-    
-   
+        return this.state.annules 
 } 
 
     render(){   

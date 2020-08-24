@@ -64,9 +64,11 @@ public class Attestation extends UserDateAudit {
     public Attestation() {
     }
 
-    public Attestation(Integer lotId, String numeroPolice, String assure, String marque, String immatriculation,
+    public Attestation(Integer lotId, Integer numeroJaune, Integer numeroCedeao, String numeroPolice, String assure, String marque, String immatriculation,
                        String usage, String genre, String profession, Short statusJaune, Short statusCedeao) {
         this.lotId = lotId;
+        this.numeroJaune = numeroJaune;
+        this.numeroCedeao = numeroCedeao;
         this.numeroPolice = numeroPolice;
         this.assure = assure;
         this.marque = marque;

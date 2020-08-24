@@ -98,7 +98,7 @@ public class JasperService
        if ((old_attestation.getStatusJaune() == AppConstants.STATUS_ATTESTATION_GENERATED && typeAttestation.equals(AppConstants.ATTESTATION_TYPE_JAUNE)) ||
                (old_attestation.getStatusCedeao() == AppConstants.STATUS_ATTESTATION_GENERATED && typeAttestation.equals(AppConstants.ATTESTATION_TYPE_CEDEAO))){
 
-           Attestation newAttestation = new Attestation(old_attestation.getLotId(), old_attestation.getNumeroPolice(), old_attestation.getAssure(),old_attestation.getMarque(), old_attestation.getImmatriculation(), old_attestation.getUsage(), old_attestation.getGenre(), old_attestation.getProfession(),old_attestation.getStatusJaune(), old_attestation.getStatusCedeao());
+           Attestation newAttestation = new Attestation(old_attestation.getLotId(), old_attestation.getNumeroJaune(), old_attestation.getNumeroCedeao(), old_attestation.getNumeroPolice(), old_attestation.getAssure(),old_attestation.getMarque(), old_attestation.getImmatriculation(), old_attestation.getUsage(), old_attestation.getGenre(), old_attestation.getProfession(),old_attestation.getStatusJaune(), old_attestation.getStatusCedeao());
 
            if (typeAttestation.equals(AppConstants.ATTESTATION_TYPE_JAUNE)) {
                old_attestation.setStatusJaune(AppConstants.STATUS_ATTESTATION_CANCELED);

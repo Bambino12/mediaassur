@@ -58,13 +58,15 @@ public class LotService {
         Lot lot = null;
         try {
 
-            lot = new Lot(lotRequest.getAssureId(), lotRequest.getAssureurId(), lotRequest.getNumeroPolice(), lotRequest.getStartDate(), lotRequest.getEndDate(), lotRequest.getFileName(), AppConstants.STATUS_LOT_NEW, AppConstants.STATUS_ATTESTATION_NEW);
+            lot = new Lot(lotRequest.getAssureId(), lotRequest.getAssureurId(), lotRequest.getNumeroPolice(), lotRequest.getStartDate(), lotRequest.getEndDate(), lotRequest.getFileName(), AppConstants.STATUS_LOT_NEW, AppConstants.STATUS_LOT_NEW);
             lot = lotRepository.save(lot);
 
             List<Attestation> attestations = lotRequest.getAttestations();
 
             for (Attestation attestation : attestations) {
                 attestation.setLotId(lot.getId());
+                attestation.setStatusCedeao(AppConstants.STATUS_ATTESTATION_NEW);
+                attestation.setStatusJaune(AppConstants.STATUS_ATTESTATION_NEW);
             }
             attestations = attestationRepository.saveAll(attestations);
 

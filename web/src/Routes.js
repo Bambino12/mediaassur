@@ -15,52 +15,29 @@ import Importation from 'pages/Importation';
 //import Sources from 'pages/hdjd';
 import Parametres from 'pages/Parametres';
 import Tags from 'pages/Tags';
-import Accueil from 'pages/Accueil';
+import Accueil from 'pages/Home';
 
 
 export default function Routes() {
   return (
     <Switch>
-      <PrivateRoute 
+      {/* <PrivateRoute 
         component={Home}
         exact
         path="/"
-      />
-      {/* <PrivateRoute 
+      /> */}
+      <PrivateRoute 
         component={Accueil}
         exact
         path="/"
-      /> */}
+      />
+      
       <PrivateRoute 
         component={Parametres}
         exact
         path="/parametre"
       />
-      {/* <PrivateRoute 
-        component={ClientList}
-        exact
-        path="/clients/liste"
-      />
-      <PrivateRoute 
-        component={Sources}
-        exact
-        path="/sources"
-      /> */}
-      {/* <PrivateRoute 
-        component={Agences}
-        exact
-        path="/agences"
-      /> */}
-      {/* <PrivateRoute 
-        component={Teams}
-        exact
-        path="/equipes"
-      />  */}
-      {/* <PrivateRoute 
-        component={Rapport}
-        exact
-        path="/rapport"
-      /> */}
+      
       <PrivateRoute 
         component={Importation}
         exact
@@ -76,11 +53,7 @@ export default function Routes() {
         exact
         path="/liste/lot"
       />
-      {/* <Route 
-        component={Users}
-        exact
-        path="/Users"
-      /> */}
+
       <Route 
         component={Login}
         exact

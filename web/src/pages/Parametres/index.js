@@ -187,7 +187,7 @@ CreateNewAssurreur = (e) => {
     var item = { 
         name:data.get('nomAssure'), 
         description:data.get('descriptionAssure'),
-        
+  
     }
     console.log(item)
     

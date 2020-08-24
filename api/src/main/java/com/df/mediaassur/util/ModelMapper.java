@@ -42,7 +42,7 @@ public class ModelMapper {
                 lotResponse.setAssure(assureRepository.getOne(lot.getAssureId()).getName());
                 lotResponse.setAssureur(assureur.getName());
                 lotResponse.setAssureurAddress(assureur.getAddress());
-                lotResponse.setCreator(userRepository.getOne(lot.getCreatedBy()).getName());
+                ////lotResponse.setCreator(userRepository.getOne(lot.getCreatedBy()).getName());
 
             }catch (Exception e){
                 e.printStackTrace();

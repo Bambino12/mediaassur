@@ -62,11 +62,6 @@ function CategoryList(props) {
     },
         [])
 
-    // function getlot (){
-    //     let newLot = JSON.parse(localStorage.getItem("currentLotSelected"));
-    //     //console.log('contenu de la fonction newlot ', newLot);
-    //     return newLot;
-    // }
 
     function getSingleLot() {
         axios.get(API_BASE_URL  + '/lots/' + localStorage.getItem('lotId'), {
@@ -89,53 +84,7 @@ function CategoryList(props) {
                 // console.log("le state ", state);
                 setState(state => ({ ...state, singleLot: res.data.attestations, isLoading: false }));
             });
-
     }
-
-    // function handleDelete(category) {
-    //     setState(state => ({ ...state, isLoading: true }))
-
-    //     exeRequestFinal(`/categories/${category.id}`, "DELETE", category,
-    //         (response) => {
-    //             setState((state, props) => {
-    //                 const { categories } = state;
-
-    //                 if (response.success) {
-    //                     notification.success({
-    //                         message: "Suppression de categorie",
-    //                         description: "La categorie a été supprimée avec succès."
-    //                     })
-
-    //                     return ({
-    //                         ...state,
-    //                         isLoading: false,
-    //                         categories: categories.filter(a => a.id !== category.id)
-    //                     })
-    //                 } else {
-    //                     notification.error({
-    //                         message: "Suppression de categorie",
-    //                         description: "La suppression de la categorie a échouée."
-    //                     })
-
-    //                     return ({
-    //                         ...state,
-    //                         isLoading: false,
-    //                         categories: categories.filter(a => a.id !== category.id)
-    //                     })
-    //                 }
-    //             });
-    //         },
-    //         (error) => {
-    //             notification.error({
-    //                 message: "Suppression de categorie",
-    //                 description: "La suppression de la categorie a échouée."
-    //             })
-
-    //             setState(state => ({ ...state, isLoading: false }))
-    //         },
-    //         this
-    //     )
-    // }
 
     function handleClose(category) {
         if (category) {
@@ -185,65 +134,6 @@ function CategoryList(props) {
         }
     };
 
-    // function printAttestatio ns(type) {
-    //     // exemple : url = localhost:8080/v1/lots/1/generate/jaune
-
-
-    //     alert("ok");
-    //     exeRequest(API_ROUTE + "/lots/" + state.currentLot.id + "/generate/" + type, "GET", null, function (res) {
-    //         if (res) {
-
-    //             console.log("res printAttestations ========================", res)
-    //             swal({
-    //                 title: "Impression des attestations",
-    //                 text: "Impression effectuée avec succès",
-    //                 icon: "success",
-    //                 closeOnClickOutside: false,
-    //                 button: "Afficher"
-    //             }).then((result) => {
-    //                 window.open(pdf_viewer_url + res.data)
-    //             });
-    //             //alert(res)
-
-    //         }
-    //     });
-
-    // };
-
-    // function printAttestations(type) {
-
-    //     if(state.input===""){
-    //         alert("Veuillez saisir un numero svp !!");
-    //         return false;
-    //     }else{
-    //         console.log("modif ", state.input);
-    //         hideModalCedeao();
-    //         hideModalJaune();
-    //         axios.get(API_ROUTE + "/lots/" + state.lotCourant.id + "/generate/" + type)
-    //     .then(res=>{
-    //         console.log('lot courant ', state.lotCourant.id);
-    //         if (res) {
-    //             console.log("res printAttestations ========================", res);
-    //             var mod = res.data;
-    //             let lien = mod.replace("http://127.0.0.1:8080", "");
-    //             console.log("le lien ", lien);
-    //             swal({
-    //                 title: "Impression des attestations",
-    //                 text: "Impression effectuée avec succès",
-    //                 icon: "success",
-    //                 closeOnClickOutside: false,
-    //                 button: "Afficher"
-    //             }).then((result) => {
-    //                 window.open(pdf_viewer_url + lien)
-    //             });
-    //             //alert(res)
-
-    //         }
-    //     })
-    //     }
-
-
-    // };
 
     function printAttestations(type) {
         if (state.input === "") {
@@ -328,19 +218,6 @@ function CategoryList(props) {
             })
     };
 
-    // function jauneHandleChange(e){
-
-    //     let isNotNull = e.target.value;
-    //     setState(state=>({...state, inputJaune: isNotNull}));
-    //     console.log('numero saisi ', state.inputJaune);
-    //   } 
-
-    //   function cedeaoHandleChange(e){
-
-    //     let isNotNull = e.target.value;
-    //     setState(state=>({...state, inputCedeao: isNotNull}));
-    //     console.log('numero saisi', state.inputCedeao);
-    //   } 
 
     function handleChange(e) {
 
@@ -466,7 +343,9 @@ function CategoryList(props) {
 
     function openLinkJaune() {
         window.open(localStorage.getItem('lienJaune'))
+        console.log("localStorage", localStorage.getItem('lienJaune'))
     }
+    
 
     const loader = state.btnLoadAjaune;
     const loaderCedeao = state.btnLoadACedeao;
