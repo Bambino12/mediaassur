@@ -11,8 +11,8 @@ import {API_BASE_URL} from '../../constant'
 class Parametre extends Component {
 
   state = {
-    loading: false,
-    visible: false,
+      loading: false,
+      visible: false,
       loadings: [],
       open: false,
       marques :false,
@@ -30,8 +30,11 @@ class Parametre extends Component {
       openassureModalForDel: false,
       itemSelected: {},
       currentUser: {},
+      currentMarque:{},
       listMarque : [],
       visibles: false,
+      openModalForUpdAssure:false,
+      openModalForUpdAssures:false
   };
 
  
@@ -75,6 +78,7 @@ getAllAssureurs(){
         console.log("response get Assureurs ", res);
         this.setState({listAssureurs: res.data, AssureursLoad: true});
     });
+
 }
 
 // Creer un assureur
@@ -128,10 +132,10 @@ CreateNewAssurreur = (e) => {
       });
 };
 
-  selectCurrentItem = (item) =>{
+selectCurrentItem = (item) =>{
     this.setState({currentItem:item})
     this.showModal(true)
-  }
+}
 
   //  Marque
   
@@ -231,8 +235,7 @@ addAssureurs = (e) => {
   var item = {  
       name:data.get('nomAssureur'), 
       description:data.get('descriptionAssureur'),
-      address: data.get('address'),
-      
+      address: data.get('address'),  
   }
   console.log(item)
 
@@ -299,6 +302,7 @@ openAssuresModal = () => {
       open: true,
   })
 };
+
 hideAssuresModal = () => {
     this.setState({
         open: false,
@@ -322,7 +326,250 @@ closeModalDeleteAssures = () => {
       openassureModalForDel: false,
   })
 }
- 
+
+// FUNCTION UPDATE USER
+
+updateData = e => {
+  e.preventDefault();
+  const warning200 = () => {
+    message.success('Succès','Modification effectué avec succès !!!');
+  };
+  const warning = () => {
+    message.warning('Erreur','Enregistrement echoué !!!');
+  };
+
+  const warning400 = () => {
+    message.warning('Erreur coté client !!!');
+  };
+
+  let data = this.state.currentUser
+  console.log("Donneee des marques==>",data);
+  axios.post(API_BASE_URL +'/users/upd',data, {
+      headers: { Authorization: "Bearer" + localStorage.getItem('token')}
+  })
+      .then(response => {
+          console.log(response);
+          if (response.data){
+            warning200();
+            this.getAllUsers()
+              // this.openNotificationWithIcon('success','Succès','Modification effectuée avec succès !!!')
+          }else
+          warning();
+              // this.openNotificationWithIcon('error','Erreur','Modification echouée !!!')
+
+          this.openModalForUpd(false)
+      })
+      .catch(error=> {
+          console.log(error);
+          warning400();
+          this.openModalForUpd(false)
+          // this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+      });
+  }
+
+handleChange = (e)  => {
+  let {name, value} = e.target //
+  this.setState(state => {
+      const newState = { ...state, currentUser: {...state.currentUser, [name]:value}} // Ici je demande a me ramener les anciennes valeurs pour pouvoir l'ecrasser par la nouvelle valeur
+      return newState // Recuperation de la new valeur
+  })
+}
+
+openModalForUpd(openModalForUpd){
+  if (openModalForUpd){
+      this.setState({openModalForUpd});
+  }
+  else{
+
+      this.setState({openModalForUpd});
+  }
+}
+
+selectForUpdate =(item)=>{
+  this.setState({currentUser: item, openModalForUpd:true}) // Recuperation de la ligne
+}
+
+// FUCTION UPD ASSURER
+
+updateDataAssure = e => {
+  e.preventDefault();
+  const warning200 = () => {
+    message.success('Succès','Modification effectué avec succès !!!');
+  };
+  const warning = () => {
+    message.warning('Erreur','Enregistrement echoué !!!');
+  };
+
+  const warning400 = () => {
+    message.warning('Erreur coté client !!!');
+  };
+
+  let newdata = this.state.currentAssur;
+
+  console.log(newdata);
+  axios.post(API_BASE_URL + '/assures/upd',newdata, {
+      headers: { Authorization: "Bearer" + localStorage.getItem('token')}
+  })
+      .then(response => {
+          console.log(response);
+          if (response.newdata){
+            warning200();
+            this.getAllAssures();
+          }else
+          warning();
+              // this.openNotificationWithIcon('error','Erreur','Modification echouée !!!')
+          this.openModalForUpdAssure(false)
+      })
+      .catch(error=> {
+          console.log(error);
+          warning400()
+          this.openModalForUpdAssure(false)
+          // this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+      });
+}
+openModalForUpdAssure(openModalForUpdAssure){
+  if (this.openModalForUpdAssure){
+      this.setState({openModalForUpdAssure});
+  }
+  else{
+      
+      this.setState({openModalForUpdAssure});
+  }
+}
+
+//======== Selectionner les valeurs et modifier dans le input ===
+handleChangeAssure = (e)  => {
+  let {name, value} = e.target //
+  this.setState(state => {
+      const newState = { ...state, currentAssur: {...state.currentAssur, [name]:value}} // Ici je demande a me ramener les anciennes valeurs pour pouvoir l'ecrasser par la nouvelle valeur
+      return newState // Recuperation de la new valeur
+  })
+}
+// Comment la ligne
+selectForUpdateAssure =(item)=>{
+  this.setState({currentAssur: item, openModalForUpdAssure:true}) // Recuperation de la ligne 
+  
+}
+
+//========================FUNCTION UPDATE ASSUREUR ===========================================
+updateDataAssureurs = e => {
+  e.preventDefault();
+  const warning200 = () => {
+    message.success('Succès','Modification effectué avec succès !!!');
+  };
+  const warning = () => {
+    message.warning('Erreur','Enregistrement echoué !!!');
+  };
+
+  const warning400 = () => {
+    message.warning('Erreur coté client !!!');
+  };
+
+  let newdata = this.state.currentAssureur;
+
+  console.log(newdata);
+  axios.post(API_BASE_URL + '/assureur/upd',newdata, {
+      headers: { Authorization: "Bearer" + localStorage.getItem('token')}
+  })
+      .then(response => {
+          console.log(response);
+          if (response.newdata){
+            warning200();
+            this.getAllAssureurs();
+            this.getAllAssures();
+              // this.openNotificationWithIcon('success','Succès','Modification effectuée avec succès !!!')
+          }else
+            warning();
+                // this.openNotificationWithIcon('error','Erreur','Modification echouée !!!')
+            this.openModalForUpdAssures(false)
+      })
+      .catch(error=> {
+          console.log(error);
+            warning400();
+            this.openModalForUpdAssures(false)
+          // this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+      });
+}
+openModalForUpdAssures(openModalForUpdAssures){
+  if (openModalForUpdAssures){
+      this.setState({openModalForUpdAssures});
+  }
+  else{
+      
+      this.setState({openModalForUpdAssures});
+  }
+}
+
+//======== Selectionner les valeurs et modifier dans le input ===
+handleChangeAssureur = (e)  => {
+  let {name, value} = e.target //
+  this.setState(state => {
+      const newState = { ...state, currentAssureur: {...state.currentAssureur, [name]:value}} // Ici je demande a me ramener les anciennes valeurs pour pouvoir l'ecrasser par la nouvelle valeur
+      return newState // Recuperation de la new valeur
+  })
+}
+// Comment la ligne
+selectForUpdateAssureur =(item)=>{
+  this.setState({currentAssureur: item, openModalForUpdAssureurs:true}) // Recuperation de la ligne  
+}
+
+ //========================FUNCTION UPDATE MARQUE ===========================================
+ updateDataMarque = e => {
+  e.preventDefault();
+  const warning200 = () => {
+    message.success('Succès','Modification effectué avec succès !!!');
+  };
+  const warning = () => {
+    message.warning('Erreur','Enregistrement echoué !!!');
+  };
+
+  const warning400 = () => {
+    message.warning('Erreur coté client !!!');
+  };
+  let newdata = this.state.currentMarque
+  console.log(newdata);
+  axios.post(API_BASE_URL + '/marque/upd',newdata, {
+      headers: { Authorization: "Bearer" + localStorage.getItem('token')}
+    })
+      .then(response => {
+          console.log(response);
+          if (response.data){
+            warning200();
+            this.getAllMarque();
+              // this.openNotificationWithIcon('success','Succès','Modification effectuée avec succès !!!')
+          }else
+              // this.openNotificationWithIcon('error','Erreur','Modification echouée !!!')
+            warning();
+          this.openModalForUpdMarque(false)
+      })
+      .catch(error=> {
+          console.log(error);
+          warning400();
+          // this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+      });
+}
+openModalForUpdMarque(openModalForUpdMarque){
+  if (openModalForUpdMarque){
+      this.setState({openModalForUpdMarque});
+  }
+  else{
+      this.setState({openModalForUpdMarque});
+  }
+
+}
+
+//======== Selectionner les valeurs et modifier dans le input ===
+handleChangeMarque = (e)  => {
+  let {name, value} = e.target //
+  this.setState(state => {
+      const newState = { ...state, currentMarque: {...state.currentMarque, [name]:value}} // Ici je demande a me ramener les anciennes valeurs pour pouvoir l'ecrasser par la nouvelle valeur
+      return newState // Recuperation de la new valeur
+  })
+}
+// Comment la ligne
+selectForUpdateMarque =(item)=>{
+  this.setState({currentMarque: item, openModalForUpdMarque:true}) // Recuperation de la ligne 
+}
 
 //  MARQUE
 
@@ -340,7 +587,7 @@ closeModalDeleteAssures = () => {
 
     render(){
       
-      const {currentAssur, isLoad, AssureursLoad, listAssureurs, currentAssureur, itemSelected} = this.state;
+      const {currentAssur, isLoad, AssureursLoad, listAssureurs, Assureurs, currentAssureur, itemSelected} = this.state;
         const { TabPane } = Tabs;
 
   
@@ -353,7 +600,7 @@ closeModalDeleteAssures = () => {
                       <div className="float-right">
                         <Button type="primary" onClick={this.openModal}>
                             <PlusOutlined style={{color:"white"}}/> Ajouter
-                        </Button><br></br><br></br>
+                        </Button><br/><br/><br></br>
                       </div>
 
                       {isLoad?(
@@ -364,14 +611,18 @@ closeModalDeleteAssures = () => {
                             <th>IDENTIFIANT</th>
                             <th>NOM PRENOM</th>
                             <th>EMAIL</th>
+                            <th>ACTION</th>
                           </tr>
                         </thead>
                         <tbody>
-                            {this.state.listUser.map((list, index)=>
+                            {this.state.listUser.map((users, index)=>
                                     <tr key={index}>
-                                      <td>{list.username}</td>
-                                      <td>{list.name}</td>
-                                      <td>{list.email}</td>
+                                      <td>{users.username}</td>
+                                      <td>{users.name}</td>
+                                      <td>{users.email}</td>
+                                      <td>
+                                        <i class='far fa-edit' style={{cursor:"pointer"}} onClick={() =>this.selectForUpdate(users)}></i>
+                                      </td>
                                     </tr>
                                     )}
                         </tbody>
@@ -387,23 +638,27 @@ closeModalDeleteAssures = () => {
                   <div>
                     <div className="float-right">
                         <Button type="primary" onClick={this.openAssuresModal}>
-                          <PlusOutlined style={{color:"white"}}/> Ajouter
-                        </Button><br></br><br></br>
+                          <PlusOutlined style={{color:"white"}}/>Ajouter
+                        </Button><br/><br/><br/>
                     </div>
 
                     {isLoad?(
                     <table className='table table-striped' width='100%'>
                    <thead>
                       <tr>
-                        <th>IDENTIFIANT</th>
+                        <th>NOM</th>
                         <th>DESCRIPTION</th>
+                        <th>ACTION</th>
                       </tr>
                     </thead>
                    <tbody>
                       {this.state.listAssures.map((list, index)=>
                               <tr key={index}>
-                                <td>{list.name}</td>
-                                <td>{list.description}</td>
+                                  <td>{list.name}</td>
+                                  <td>{list.description}</td>
+                                  <td>
+                                    <i class='far fa-edit' style={{cursor:"pointer"}} onClick={()=>this.selectForUpdateAssure(list)}></i>
+                                  </td>
                               </tr>
                               )}
                    </tbody>
@@ -422,24 +677,30 @@ closeModalDeleteAssures = () => {
                         <div className="float-right">
                           <Button type="primary" onClick={this.openAssureursModal}>
                               <PlusOutlined style={{color:"white"}}/> Ajouter
-                          </Button><br></br><br/>
+                          </Button><br/><br/><br/>
                         </div>
                           
                       {AssureursLoad?(
                           <table className='table table-striped'>
                             <thead>
                               <tr>
-                                <th>NOM PRENOM</th>
+                                <th>NOM</th>
                                 <th>DESCRIPTION</th>
                                 <th>ADRESSE</th>
+                                <th>ACTION</th>
                               </tr>
                             </thead>
                             <tbody>
-                                {this.state.listAssureurs.map((assureurs, index)=>
+                                {this.state.listAssureurs.map((assures, index)=>
                                   <tr key={index}>
-                                    <td>{assureurs.name}</td>
-                                    <td>{assureurs.description}</td>
-                                    <td>{assureurs.address}</td>                                    
+                                    <td>{assures.name}</td>
+                                    <td>{assures.description}</td>
+                                    <td>{assures.address}</td>
+                                    <td>
+                                        {/* <i class='far fa-edit' onClick={()=>this.selectForUpdateAssureur(assures)}></i> */}
+                                        <i class='far fa-edit' style={{cursor:"pointer"}} onClick={() =>this.selectForUpdateAssureur(assures)}></i>
+
+                                    </td>
                                   </tr>
                                   )}
                             </tbody>
@@ -463,8 +724,9 @@ closeModalDeleteAssures = () => {
                     <table className='table table-striped' width='100%'>
                       <thead>
                           <tr>
-                            <th>NOM</th>
+                            <th>MARQUE</th>
                             <th>DESCRIPTION</th>
+                            <th>ACTION</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -472,6 +734,9 @@ closeModalDeleteAssures = () => {
                                   <tr key={index}>
                                     <td>{marque.name}</td>
                                     <td>{marque.description}</td>
+                                    <td>
+                                        <i class='far fa-edit' style={{cursor:"pointer"}} onClick={()=>this.selectForUpdateMarque(marque)}></i>
+                                    </td>
                                   </tr>
                                   )}
                       </tbody>
@@ -498,7 +763,7 @@ closeModalDeleteAssures = () => {
                               <div className=" col-md-6">
                                   <label className="text-secondary mt-1" style={{float: "left", marginBottom: "-1px"}}><strong>NOM :</strong></label><br/>
                                   <Input type="text" placeholder="Nom de l'assuré" name="nomAssure" className="form-control form-control-sm flex-right"/>
-                              </div><br/>
+                              </div><br/><br/><br/>
                               <div className=" col-md-6">
                                   <label className="text-secondary mt-1" style={{float: "left", marginBottom: "-1px"}}><strong>DESCRIPTION :</strong></label><br/>
                                   <Input type="text" placeholder="Description" name="descriptionAssure" className="form-control form-control-sm flex-right" style={{width: '100%'}}/>
@@ -526,12 +791,12 @@ closeModalDeleteAssures = () => {
                       <div>
                           <div className="form-row">
                               
-                                  <label className="text-secondary mt-1" style={{float: "left", marginBottom: "-1px"}}><strong>NOM PRENOM :</strong></label><br/>
+                                  <label className="text-secondary mt-1" style={{float: "left", marginBottom: "-1px"}}><strong>NOM :</strong></label><br/>
                                   <Input type="text" placeholder="Nom de l'assureur" name="nomAssureur" className="form-control form-control-sm flex-right" style={{width: '100%'}}/>
-                              <br/><br/><br/>
+                              <br/><br/><br/><br/>
                                   <label className="text-secondary mt-1" style={{float: "left", marginBottom: "-1px"}}><strong>DESCRIPTION :</strong></label><br/>
                                   <Input type="text" placeholder="Description" name="descriptionAssureur" className="form-control form-control-sm flex-right" style={{width: '100%'}}/>
-                              <br/><br/><br/>
+                              <br/><br/><br/><br/>
                                   <label className="text-secondary mt-1" style={{float: "left", marginBottom: "-1px"}}><strong>ADRESSE :</strong></label><br/>
                                   <Input type="text" placeholder="Adresse" name="address" className="form-control form-control-sm flex-right" style={{width: '100%'}}/>
                               <br/>
@@ -569,18 +834,18 @@ closeModalDeleteAssures = () => {
                             </div>
                             <div className="form-row" >
                                 <div className="col form-group">
-                                    <label><strong> EMAIL : </strong></label>
+                                    <label><strong>EMAIL : </strong></label>
                                     <input value={this.state.currentUser.email} name="email" type="email" placeholder="monemail@gmail.com" className="form-control form-control-sm"/>
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="col form-group">
-                                    <label><strong> MOT DE PASSE : </strong></label>
-                                    <input id="input_pword" name="password" type="password" placeholder="Entrez le mot de passe" className="form-control form-control-sm" required/>
+                                    <label><strong>MOT DE PASSE : </strong></label>
+                                    <input id="input_pword" name="anpassword" type="password" placeholder="Entrez le mot de passe" className="form-control form-control-sm" required/>
                                 </div>
                                 <div className="col form-group">
-                                    <label><strong> CONFIRMER MOT DE PASSE : </strong></label>
-                                    <input id="input_confirme_pword" name="pword" type="password" placeholder="Confirmez le mot de passe" className="form-control form-control-sm" required/>
+                                    <label><strong>CONFIRMER MOT DE PASSE : </strong></label>
+                                    <input id="input_confirme_pword" name="password" type="password" placeholder="Confirmez le mot de passe" className="form-control form-control-sm" required/>
                                 </div>
                             </div>
                         </div>
@@ -596,11 +861,11 @@ closeModalDeleteAssures = () => {
                 </Modal>
                   
                 {/* ======================= ADD MARQUE ========================== */}             
-                <Modal title="Ajout de Marque !" centered 
+                <Modal title="Ajout de Marque !" centered
                       //  visible={this.state.open}
                        onOk={this.hideModal1}
                        onCancel={this.hideModal1}
-                       footer={[ ]}
+                       footer={[]}
                        visible={this.state.visibles}
                        >
                            
@@ -608,7 +873,7 @@ closeModalDeleteAssures = () => {
                       <div>
                           <div className="form-row">
                               <div className=" col-md-6">
-                                  <label className="text-secondary mt-1" style={{float: "left", marginBottom: "-1px"}}><strong>NOM :</strong></label><br/>
+                                  <label className="text-secondary mt-1" style={{float: "left", marginBottom: "-1px"}}><strong>MARQUE :</strong></label><br/>
                                   <Input type="text" placeholder="Saisissez la marque" name="marque" className="form-control form-control-sm flex-right"/>
                               </div><br/>
                               <div className=" col-md-6">
@@ -627,11 +892,184 @@ closeModalDeleteAssures = () => {
                         </div>
                     </form>
                 </Modal>
+                {/* ==================MODAL UPDATE==================== */}
+
+                {/* ============ UPDATE USER=================== */}
+
+                <Modal title="Update User!" centered visible={this.state.openModalForUpd}
+                       onOk={()=> this.openModalForUpd(false)}
+                       onCancel={()=> this.openModalForUpd(false)}
+                       footer={[ ]}>
+                    <form onSubmit={this.updateData}>
+                        <div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> ID : </strong></label>
+                                    <input id="iduser" name="name" type="text" value={this.state.currentUser.id} onChange={this.handleChange} className="form-control form-control-sm" required/>
+                                </div>
+                            </div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> IDENTIFIANT : </strong></label>
+                                    <input id="username" name="username" type="text" value={this.state.currentUser.username} onChange={this.handleChange} className="form-control form-control-sm" required/>
+                                </div>
+                            </div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> NOM PRENOM : </strong></label>
+                                    <input id="name" name="name" type="text" value={this.state.currentUser.name} onChange={this.handleChange} className="form-control form-control-sm" required/>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col form-group">
+                                    <label><strong> EMAIL : </strong></label>
+                                    <input id="email"  name="email" value={this.state.currentUser.email} onChange={this.handleChange} type="email" className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col form-group">
+                                    <label><strong>NOUVEAU MOT DE PASSE : </strong></label>
+                                    <input id="input_pword" name="password" value={this.state.currentUser.password} onChange={this.handleChange} type="password" className="form-control form-control-sm" required />
+                                </div>
+                                <div className="col form-group">
+                                    <label><strong> CONFIRMER MOT DE PASSE : </strong></label>
+                                    <input id="input_confirme_pword" name="pword2" value={this.state.currentUser.pword2} onChange={this.handleChange} type="password" className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="text-right w-100">
+                            <Button onClick={()=> this.openModalForUpd(false)}>
+                                Annuler
+                            </Button> &nbsp;
+                            <Button type="primary" htmlType="submit">
+                                Modifier
+                            </Button>
+                        </div>
+                    </form>
+                </Modal>
+
+                {/* =============== UPD USSURE =====================*/}
+
+                <Modal title="Update Assure!" centered visible={this.state.openModalForUpdAssure}
+                       onOk={()=> this.openModalForUpdAssure(false)}
+                       onCancel={()=> this.openModalForUpdAssure(false)}
+                       footer={[ ]}>
+                    <form onSubmit={this.updateDataAssure}>
+                        <div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> ID : </strong></label>
+                                    <input id="iduser" name="name" type="text" value={this.state.currentAssur.id} onChange={this.handleChangeAssure} className="form-control form-control-sm" required/>
+                                </div>
+                            </div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> NOM : </strong></label>
+                                    <input id="name" name="name" value={this.state.currentAssur.name} onChange={this.handleChangeAssure} type="text" className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> DESCRIPTION : </strong></label>
+                                    <input id="description" name="description" type="text" value={this.state.currentAssur.description} onChange={this.handleChangeAssure} className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="text-right w-100">
+                            <Button onClick={()=> this.openModalForUpdAssure(false)}>
+                                Annuler
+                            </Button> &nbsp;
+                            <Button type="primary" htmlType="submit">
+                                Modifier
+                            </Button>
+                        </div>
+                    </form>
+                </Modal>
+
+                <Modal title="Update Assureur!" centered visible={this.state.openModalForUpdAssures}
+                       onOk={()=> this.hideModalUpdAssureurs(false)}
+                       onCancel={()=> this.hideModalUpdAssureurs(false)}
+                       footer={[ ]}>
+                    <form onSubmit={this.updateDataAssureurs}>
+                        <div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> ID : </strong></label>
+                                    <input id="idassure" name="idassure" type="text" value={this.state.currentAssureur.id} onChange={this.handleChangeAssureur} className="form-control form-control-sm" required/>
+                                </div>
+                            </div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> NOM : </strong></label>
+                                    <input id="name" name="name" value={this.state.currentAssureur.name} onChange={this.handleChangeAssureur} type="text" className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> DESCRIPTION : </strong></label>
+                                    <input id="description" name="description" type="text" value={this.state.currentAssureur.description} onChange={this.handleChangeAssure} className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                            <div className="form-row" >
+                                <div className="col form-group">
+                                    <label><strong> ADRESSE : </strong></label>
+                                    <input id="address" name="address" value={this.state.currentAssureur.address} onChange={this.handleChangeAssureur} type="text" className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="text-right w-100">
+                            <Button onClick={()=> this.hideModalUpdAssureurs(false)}>
+                                Annuler
+                            </Button> &nbsp;
+                            <Button type="primary" htmlType="submit">
+                                Modifier
+                            </Button>
+                        </div>
+                    </form>
+                </Modal>
+        
+                {/* ======================== UPD MARQUES ================ */}
+                
+                <Modal title="Update Marque!" centered visible={this.state.openModalForUpdMarque}
+                       onOk={()=> this.openModalForUpdMarque(false)}
+                       onCancel={()=> this.openModalForUpdMarque(false)}
+                       footer={[ ]}>
+                    <form onSubmit={this.updateDataMarque}>
+                        <div>
+                            <div className="form-row">
+                                <div className="col form-group">
+                                  {/* <input disabled="true" id="idmarque" value={this.state.currentMarque.id}></input> */}
+                                    <label><strong> ID : </strong></label>
+                                    <input id="iduser" type="text" name="name" value={this.state.currentMarque.id} onChange={this.handleChangeMarque} className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col form-group">
+                                  {/* <input disabled="true" id="idmarque" value={this.state.currentMarque.id}></input> */}
+                                    <label><strong> MARQUE : </strong></label>
+                                    <input id="name" name="name" value={this.state.currentMarque.name} onChange={this.handleChangeMarque} type="text" className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col form-group">
+                                    <label><strong> DESCRIPTION : </strong></label>
+                                    <input id="description"  name="description" value={this.state.currentMarque.description} onChange={this.handleChangeMarque} type="text" className="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="text-right w-100">
+                            <Button onClick={()=> this.openModalForUpdMarque(false)}>
+                                Annuler
+                            </Button> &nbsp;
+                            <Button type="primary" htmlType="submit">
+                                Modifier
+                            </Button>
+                        </div>
+                    </form>
+                </Modal>
         </div>
         );
         }
     }
-  
-
 
 export default Parametre;

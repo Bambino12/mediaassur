@@ -1,0 +1,94 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Super hero squad",
+      "email": "test@gmail.com",
+      "tel": "87885421",
+      "supervisor": {
+        "name":"Eternal Flame",
+        "username": "Uppercut",
+        "tel": "09885421",
+        "email": "testmail@gmail.com"
+      },
+      "description": "Million tonne punch. Damage resistance",
+      "indicator":"Damage resistance",
+      "lat": 5.374556,
+      "lng": -3.984601,
+      "status": -1,
+      "employeesNumber": 30
+    },
+    {
+      "id": 2,
+      "name": "Super hero squad",
+      "email": "test@gmail.com",
+      "tel": "87885421",
+      "supervisor": {
+        "name":"Eternal Flame",
+        "username": "Uppercut",
+        "tel": "09885421",
+        "email": "testmail@gmail.com"
+      },
+      "description": "Million tonne punch. Damage resistance",
+      "indicator":"Damage resistance",
+      "lat": 5.324556,
+      "lng": -3.914601,
+      "status": 1,
+      "employeesNumber": 30
+    },
+    {
+      "id": 3,
+      "name": "Super hero squad",
+      "email": "test@gmail.com",
+      "tel": "87885421",
+      "supervisor": {
+        "name":"Eternal Flame",
+        "username": "Uppercut",
+        "tel": "09885421",
+        "email": "testmail@gmail.com"
+      },
+      "description": "Million tonne punch. Damage resistance",
+      "indicator":"Damage resistance",
+      "lat": 5.300556,
+      "lng": -3.999601,
+      "status": 1,
+      "employeesNumber": 30
+    },
+    {
+      "id": 3,
+      "name": "Super hero squad",
+      "email": "test@gmail.com",
+      "tel": "87885421",
+      "supervisor": {
+        "name":"Eternal Flame",
+        "username": "Uppercut",
+        "tel": "09885421",
+        "email": "testmail@gmail.com"
+      },
+      "description": "Million tonne punch. Damage resistance",
+      "indicator":"Damage resistance",
+      "lat": 5.380056,
+      "lng": -3.909601,
+      "status": 1,
+      "employeesNumber": 30
+    },
+    {
+      "id": 3,
+      "name": "Super hero squad",
+      "email": "test@gmail.com",
+      "tel": "87885421",
+      "supervisor": {
+        "name":"Eternal Flame",
+        "username": "Uppercut",
+        "tel": "09885421",
+        "email": "testmail@gmail.com"
+      },
+      "description": "Million tonne punch. Damage resistance",
+      "indicator":"Damage resistance",
+      "lat": 5.300056,
+      "lng": -3.909601,
+      "status": 0,
+      "employeesNumber": 30
+    }
+  ]
+}

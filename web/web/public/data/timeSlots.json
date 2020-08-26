@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "name": "plage 1",
+      "hour": "08:00 à 18:00",
+      "pauseTime": "01h",
+      "breakTime": "12:30 à 13:00"
+    },
+    {
+      "name": "plage 2",
+      "hour": "08:00 à 18:00",
+      "pauseTime": "01h",
+      "breakTime": "12:30 à 13:00"
+    },
+    {
+      "name": "plage 3",
+      "hour": "08:00 à 18:00",
+      "pauseTime": "01h",
+      "breakTime": "12:30 à 13:00"
+    },
+    {
+      "name": "plage 4",
+      "hour": "08:00 à 18:00",
+      "pauseTime": "01h",
+      "breakTime": "12:30 à 13:00"
+    }
+  ]
+}

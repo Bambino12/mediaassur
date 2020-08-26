@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 
 import {connect} from "react-redux";
 import makeStyles from '@material-ui/styles/makeStyles';
-import { Card, Table, Switch, Avatar, Button, Divider, Tag } from 'antd';
+import { Card, Table, Switch, Avatar, Button, Divider, Tag, Input } from 'antd';
 import { PlusOutlined, EditOutlined, PrinterOutlined, EyeOutlined } from '@ant-design/icons';
 
 import * as Helpers from 'util/Helpers';
@@ -86,6 +86,7 @@ function UserList(props) {
             setState(state => ({...state, isUpdateDrawerVisible: false}))
         }
     }
+
 
     function handleAddClose(user){
         if(user){
@@ -171,6 +172,45 @@ function UserList(props) {
         },
     ];
 
+//     function SearchLot(){
+//         if(state.searchInput === ""){
+//             return state.listLot;
+//         }
+//         else
+//         {
+//          let lots = state.listLot.filter(function(lot){
+//              return lot.numeroPolice.startsWith(''+state.searchInput+'') || lot.assure.startsWith(''+state.searchInput+'') || lot.assureur.startsWith(''+state.searchInput+'');
+//          })
+//          console.log("lots: ", lots);
+//          return lots;
+//       //    || lot.assure == state.searchInput || lot.assureur == state.searchInput
+//         }
+//     }
+
+function SearchLot(){
+    if(state.searchInput === ""){
+        return state.listLot;
+    }
+    else
+    {
+     let lots = state.listLot.filter(function(lot){
+         return lot.numeroPolice.startsWith(''+state.searchInput+'') || lot.assure.startsWith(''+state.searchInput+'') || lot.assureur.startsWith(''+state.searchInput+'');
+     })
+     console.log("lots: ", lots);
+     return lots;
+  //    || lot.assure == state.searchInput || lot.assureur == state.searchInput
+    }
+}
+  
+function handlesearchInput(e) {
+    let inputValue = e.target.value;
+    setState(state => ({ ...state, searchInput: inputValue }));
+    console.log('numero saisi ', inputValue);
+    return inputValue;
+ }
+  
+  const lot = state.listLot;
+
     return (
         <Fragment>
             <Card>
@@ -189,9 +229,11 @@ function UserList(props) {
                 <Divider/>
                 
                 <div style={{overflow: "auto", padding: 5}}>
+                    
                     <Table
                         rowKey={record => record.id} 
-                        columns={columns} 
+                        columns={columns}
+                        dataSource={SearchLot()}  
                         dataSource={state.listLot}  
                         loading={state.isLoading} 
                         scroll={{x:1500}}

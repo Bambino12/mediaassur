@@ -1,0 +1,57 @@
+package com.df.mediaassur.model;
+
+
+import com.df.mediaassur.model.audit.UserDateAudit;
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.*;
+
+
+@Entity
+@Table( name="marque")
+
+
+public class Marque extends UserDateAudit {
+    @javax.persistence.Id
+    @Id
+    @GeneratedValue(generator = "Marque_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "Marque_id_seq",
+            sequenceName = "Marque_id_seq",
+            allocationSize = 100
+    )
+    private Integer id;
+    private String name;
+    private String description;
+
+
+    public Marque() {
+
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+}

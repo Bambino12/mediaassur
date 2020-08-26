@@ -352,6 +352,49 @@ function CategoryList(props) {
     const singleLoader = state.singleBtnLoad;
     //const infoLot = parseJSON(localStorage.getItem('infolot'));
     const infoLot = state.infolot;
+
+
+    function SearchLot(){
+        if(state.searchInput === ""){
+            return state.singleLot;
+        }
+        else
+        {
+        // console.log('singleLot :', state.singleLot);
+         let attestations = state.singleLot.filter(function(attestation){
+             //console.log('attestion :', attestation);
+             return attestation.numeroJaune == state.searchInput || attestation.numeroCedeao == state.searchInput || attestation.marque == state.searchInput || attestation.immatriculation == state.searchInput;
+         })
+         console.log("attestations: ", attestations);
+         return attestations;
+         
+        }
+    }
+
+    // function SearchLot(){
+    //     if(state.searchInput === ""){
+    //         return state.singleLot;
+    //     }
+    //     else
+    //     {
+    //      let attestations = state.singleLot.filter(function(attestations){
+    //          return attestations.immatriculation.startsWith(''+state.searchInput+'') || attestations.assure.startsWith(''+state.searchInput+'');
+    //      })
+    //      console.log("attestations: ", attestations);
+    //      return attestations;
+    //   //    || lot.assure == state.searchInput || lot.assureur == state.searchInput
+    //     }
+    // }
+  
+    function handlesearchInput(e) {
+     let inputValue = e.target.value;
+     setState(state => ({ ...state, searchInput: inputValue }));
+     console.log('numero saisi ', inputValue);
+     return inputValue;
+  }
+
+  const lot = state.singleLot;
+
     return (
         <Fragment>
             <Card>
@@ -426,6 +469,9 @@ function CategoryList(props) {
                                             </Button>
                                         )}
                                 </div>
+                                <div style={{width:"97%", float:"right", paddingTop:"20px"}}>
+                                    <Input type="text" placeholder="Search" name="seach" onChange={handlesearchInput}/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -433,13 +479,13 @@ function CategoryList(props) {
 
                 <Divider />
 
-                <div style={{ overflow: "auto", padding: 5 }}>
+                <div style={{overflow: "auto", padding: 5 }}>
                     <Table
                         rowKey={record => record.id}
                         columns={columns}
                         dataSource={state.singleLot}
+                        dataSource={SearchLot()}
                         loading={state.isLoading}
-
                     />
                 </div>
 
