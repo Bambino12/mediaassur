@@ -349,9 +349,9 @@ updateData = e => {
   })
       .then(response => {
           console.log(response);
-          if (response.data){
+          if (response){
             warning200();
-            // this.getAllUsers()
+            this.getAllUsers()
               // this.openNotificationWithIcon('success','Succès','Modification effectuée avec succès !!!')
           }else
           warning();
@@ -412,7 +412,7 @@ updateDataAssure = e => {
   })
       .then(response => {
           console.log(response);
-          if (response.newdata){
+          if (response){
             warning200();
             this.getAllAssures();
           }else
@@ -473,9 +473,9 @@ updateDataAssureurs = e => {
   })
       .then(response => {
           console.log(response);
-          if (response.newdata){
+          if (response){
             warning200();
-            // this.getAllAssureurs();
+            this.getAllAssureurs();
             // this.getAllAssures();
               // this.openNotificationWithIcon('success','Succès','Modification effectuée avec succès !!!')
           }else
@@ -533,9 +533,9 @@ selectForUpdateAssureur =(item)=>{
     })
       .then(response => {
           console.log(response);
-          if (response.data){
+          if (response){
             warning200();
-            // this.getAllMarque();
+            this.getAllMarque();
               // this.openNotificationWithIcon('success','Succès','Modification effectuée avec succès !!!')
           }else
               // this.openNotificationWithIcon('error','Erreur','Modification echouée !!!')
