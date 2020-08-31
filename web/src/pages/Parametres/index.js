@@ -417,14 +417,12 @@ updateDataAssure = e => {
             this.getAllAssures();
           }else
           warning();
-              // this.openNotificationWithIcon('error','Erreur','Modification echouée !!!')
           this.openModalForUpdAssure(false)
       })
       .catch(error=> {
           console.log(error);
           warning400()
           this.openModalForUpdAssure(false)
-          // this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
       });
 }
 openModalForUpdAssure(openModalForUpdAssure){
@@ -468,7 +466,7 @@ updateDataAssureurs = e => {
   let newdata = this.state.currentAssureur;
 
   console.log(newdata);
-  axios.post(API_BASE_URL + '/assureur/upd',newdata, {
+  axios.post(API_BASE_URL + '/assureurs/upd',newdata, {
       headers: { Authorization: "Bearer" + localStorage.getItem('token')}
   })
       .then(response => {
@@ -476,18 +474,15 @@ updateDataAssureurs = e => {
           if (response){
             warning200();
             this.getAllAssureurs();
-            // this.getAllAssures();
-              // this.openNotificationWithIcon('success','Succès','Modification effectuée avec succès !!!')
+
           }else
             warning();
-                // this.openNotificationWithIcon('error','Erreur','Modification echouée !!!')
-            this.openModalForUpdAssures(false)
+            this.hideModalUpdAssureurs(false)
       })
       .catch(error=> {
           console.log(error);
             warning400();
-            this.openModalForUpdAssures(false)
-          // this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+            this.hideModalUpdAssureurs(false)
       });
 }
 openModalForUpdAssures(openModalForUpdAssures){
@@ -587,7 +582,7 @@ selectForUpdateMarque =(item)=>{
 
     render(){
       
-      const {currentAssur, isLoad, AssureursLoad, listAssureurs, Assureurs, currentAssureur, itemSelected} = this.state;
+      const {currentAssur,visible, loading, isLoad, AssureursLoad, listAssureurs, Assureurs, currentAssureur, itemSelected} = this.state;
         const { TabPane } = Tabs;
 
   
@@ -985,10 +980,12 @@ selectForUpdateMarque =(item)=>{
                         </div>
                     </form>
                 </Modal>
+                
+                {/* =================== UPD ASSUREUR ================================ */}
 
-                <Modal title="Update Assureur!" centered visible={this.state.openModalForUpdAssures}
-                       onOk={()=> this.hideModalUpdAssureurs(false)}
-                       onCancel={()=> this.hideModalUpdAssureurs(false)}
+                <Modal title="Update Assureur!" centered visible={this.state.openModalForUpdAssureurs}
+                       onOk={()=> this.openModalForUpdAssureurs(false)}
+                       onCancel={()=> this.openModalForUpdAssureurs(false)}
                        footer={[ ]}>
                     <form onSubmit={this.updateDataAssureurs}>
                         <div>
@@ -1018,7 +1015,7 @@ selectForUpdateMarque =(item)=>{
                             </div>
                         </div>
                         <div className="text-right w-100">
-                            <Button onClick={()=> this.hideModalUpdAssureurs(false)}>
+                            <Button onClick={()=> this.openModalForUpdAssureurs(false)}>
                                 Annuler
                             </Button> &nbsp;
                             <Button type="primary" htmlType="submit">
