@@ -1004,7 +1004,7 @@ selectForUpdateMarque =(item)=>{
                             <div className="form-row" >
                                 <div className="col form-group">
                                     <label><strong> DESCRIPTION : </strong></label>
-                                    <input id="description" name="description" type="text" value={this.state.currentAssureur.description} onChange={this.handleChangeAssure} className="form-control form-control-sm" required />
+                                    <input id="description" name="description" type="text" value={this.state.currentAssureur.description} onChange={this.handleChangeAssureur} className="form-control form-control-sm" required />
                                 </div>
                             </div>
                             <div className="form-row" >
