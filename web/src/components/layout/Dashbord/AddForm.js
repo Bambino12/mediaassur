@@ -170,6 +170,31 @@ function AddForm(props) {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
+                name="numeroPolice"
+                label="Numero de police"
+                rules={[{ required: true, message: 'Veuillez saisir le numero de police' }]}
+              >
+                <Input placeholder="Veuillez saisir le numero de police" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+                <Form.Item
+                    name="assureur"
+                    label="Assureur"
+                    rules={[{ required: true, message: 'Veuillez saisir votre assureur' }]}
+                  >
+                    {/* <Select placeholder="Veuillez selectionner votre assureur">
+                      {state.lots.map(( m, index) => (
+                        <Option key={m.id} value={m.id}>{m.assureur}</Option>
+                      ))}
+                    </Select> */}
+                    <Input placeholder="Veuillez saisir votre assureur" />
+                </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
                 name="assure"
                 label="Assuré"
                 rules={[{ required: true, message: 'Veuillez saisir le nom de l\'assuré' }]}
@@ -239,6 +264,33 @@ function AddForm(props) {
                     
                   >
                   <Input placeholder="Veuillez saisir le genre" />
+                </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={12}>
+                <Form.Item
+                    name="startDate"
+                    label="Date debut"
+                    rules={[{ required: true, message: 'Debut periode de marge' }]}
+                    htmlFor="startDate"
+                  >
+                    <Input id="startDate" type="date" placeholder="jj/mm/aaaa" />
+                    {/* <Select placeholder="Veuillez selectionner l'usage">
+                      {state.roles.map(( m, index) => (
+                        <Option key={m.id} value={m.id}>{m.name}</Option>
+                      ))}
+                    </Select> */}
+                </Form.Item>
+            </Col>
+            <Col span={12}>
+                <Form.Item
+                    label="Date fin"
+                    name="endDate"
+                    rules={[{ required: true, message: 'Fin periode de marge' }]}
+                    htmlFor="endDate"
+                  >
+                  <Input id="endDate" type="date" placeholder="jj/mm/aaaa" />
                 </Form.Item>
             </Col>
           </Row>
