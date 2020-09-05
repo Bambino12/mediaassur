@@ -168,7 +168,7 @@ function AddForm(props) {
         
         <Form layout="vertical" hideRequiredMark form={form} name="control-hooks" onFinish={onFinish}>
           <Row gutter={16}>
-            <Col span={12}>
+            <Col span={24}>
               <Form.Item
                 name="numeroPolice"
                 label="Numero de police"
@@ -176,20 +176,6 @@ function AddForm(props) {
               >
                 <Input placeholder="Veuillez saisir le numero de police" />
               </Form.Item>
-            </Col>
-            <Col span={12}>
-                <Form.Item
-                    name="assureur"
-                    label="Assureur"
-                    rules={[{ required: true, message: 'Veuillez saisir votre assureur' }]}
-                  >
-                    {/* <Select placeholder="Veuillez selectionner votre assureur">
-                      {state.lots.map(( m, index) => (
-                        <Option key={m.id} value={m.id}>{m.assureur}</Option>
-                      ))}
-                    </Select> */}
-                    <Input placeholder="Veuillez saisir votre assureur" />
-                </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
@@ -204,15 +190,16 @@ function AddForm(props) {
             </Col>
             <Col span={12}>
                 <Form.Item
-                    name="lot_id"
-                    label="Associer au lot"
-                    rules={[{ required: true, message: 'Veuillez associer a un lot' }]}
+                    name="assureur"
+                    label="Assureur"
+                    rules={[{ required: true, message: 'Veuillez saisir votre assureur' }]}
                   >
-                    <Select placeholder="Veuillez selectionner le lot asscié">
+                    {/* <Select placeholder="Veuillez selectionner votre assureur">
                       {state.lots.map(( m, index) => (
-                        <Option key={m.id} value={m.id}>{m.numeroPolice}</Option>
+                        <Option key={m.id} value={m.id}>{m.assureur}</Option>
                       ))}
-                    </Select>
+                    </Select> */}
+                    <Input placeholder="Veuillez saisir votre assureur" />
                 </Form.Item>
             </Col>
           </Row>

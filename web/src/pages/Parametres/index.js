@@ -33,12 +33,18 @@ class Parametre extends Component {
       currentMarque:{},
       listMarque : [],
       visibles: false,
+      itemSelectedMarque:{},
+      itemSelectedAssure:{},
+      itemSelectedAssureur:{},
+      openModalForDel:false,
       openModalForUpdAssure:false,
-      openModalForUpdAssures:false
+      openModalForUpdAssures:false,
+      openModalForDelAssureurs:false,
+      openModalForDelMarque:false,
   };
 
  
-  componentDidMount() {
+componentDidMount() {
     this.getAllAssures();
     this.getAllAssureurs();
     this.getAllUsers();
@@ -380,7 +386,6 @@ openModalForUpd(openModalForUpd){
       this.setState({openModalForUpd});
   }
   else{
-
       this.setState({openModalForUpd});
   }
 }
@@ -485,13 +490,13 @@ updateDataAssureurs = e => {
             this.hideModalUpdAssureurs(false)
       });
 }
-openModalForUpdAssures(openModalForUpdAssures){
-  if (openModalForUpdAssures){
-      this.setState({openModalForUpdAssures});
+openModalForUpdAssureurs(openModalForUpdAssureurs){
+  if (openModalForUpdAssureurs){
+      this.setState({openModalForUpdAssureurs});
   }
   else{
       
-      this.setState({openModalForUpdAssures});
+      this.setState({openModalForUpdAssureurs});
   }
 }
 
@@ -579,10 +584,163 @@ selectForUpdateMarque =(item)=>{
       visibles: false,
     });
   };
+    // ===================================================================================================================================================
 
+      // =============================== FUNCTION DELETE USER =================================================
+      deleteData = () => {
+        let data =  this.state.itemSelected
+        console.log(data)
+        axios.post(API_BASE_URL +"",data, {
+            headers: { Authorization: "Bearer " + localStorage.getItem('token')}
+        })
+            .then(response => {
+                console.log("Result delete",response);
+                if (response.data){
+                    this.setState({isLoad:false})
+                    this.openNotificationWithIcon('success','Succès','Suppression effectuée avec succès !!!')
+                    this.getAllUsers();
+                    
+                }else
+                    this.openNotificationWithIcon('error','Erreur','Suppression echouée !!!')
+                    this.openModalForDel(false)
+
+            })
+            .catch(error=> {
+                console.log(error);
+                this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+            });
+    }
+    openModalForDel(openModalForDel){
+        this.setState({openModalForDel});
+    }
+    selectForDelete =(item)=>{
+        this.setState({itemSelected: item, openModalForDel:true}) // Recuperation de la ligne 
+    }
+
+    openNotificationWithIcon = (notification,type,title,msg) => {
+      notification[type]({
+          message: title,
+          description: msg,
+      });
+  };
+
+        // =============================== FUNCTION DELETE USER =================================================
+        deleteDataAssureur = () => {
+          let data =  this.state.itemSelectedAssureur
+          console.log(data)
+          axios.post(API_BASE_URL +"",data, {
+              headers: { Authorization: "Bearer " + localStorage.getItem('token')}
+          })
+              .then(response => {
+                  console.log("Result delete",response);
+                  if (response.data){
+                      this.setState({isLoad:false})
+                      this.openNotificationWithIcon('success','Succès','Suppression effectuée avec succès !!!')
+                      this.getAllAssureurs();
+                      
+                  }else
+                      this.openNotificationWithIcon('error','Erreur','Suppression echouée !!!')
+                      this.openModalForDelAssureurs(false)
+  
+              })
+              .catch(error=> {
+                  console.log(error);
+                  this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+              });
+      }
+      openModalForDelAssureurs(openModalUpdAssureurs){
+          this.setState({openModalUpdAssureurs});
+      }
+      selectForDeleteAssureur =(item)=>{
+          this.setState({itemSelectedAssureur: item, openModalUpdAssureurs:true}) // Recuperation de la ligne 
+      }
+  
+      openNotificationWithIcon = (notification,type,title,msg) => {
+        notification[type]({
+            message: title,
+            description: msg,
+        });
+    };
+
+          // =============================== FUNCTION DELETE ASSURER=================================================
+          deleteDataAssure = () => {
+            let data =  this.state.itemSelectedAssure
+            console.log(data)
+            axios.post(API_BASE_URL +"",data, {
+                headers: { Authorization: "Bearer " + localStorage.getItem('token')}
+            })
+                .then(response => {
+                    console.log("Result delete",response);
+                    if (response.data){
+                        this.setState({isLoad:false})
+                        this.openNotificationWithIcon('success','Succès','Suppression effectuée avec succès !!!')
+                        this.getAllAssures();
+                        
+                    }else
+                        this.openNotificationWithIcon('error','Erreur','Suppression echouée !!!')
+                        this.openModalForDelAssure(false)
+    
+                })
+                .catch(error=> {
+                    console.log(error);
+                    this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+                });
+        }
+        openModalForDelAssure(openModalForDelAssure){
+            this.setState({openModalForDelAssure});
+        }
+        selectForDeleteAssure =(item)=>{
+            this.setState({itemSelectedAssure: item, openModalForDelAssure:true}) // Recuperation de la ligne 
+        }
+    
+        openNotificationWithIcon = (notification,type,title,msg) => {
+          notification[type]({
+              message: title,
+              description: msg,
+          });
+      };
+
+            // =============================== FUNCTION DELETE USER =================================================
+            deleteDataMarque = () => {
+              let data =  this.state.itemSelectedMarque
+              console.log(data)
+              axios.post(API_BASE_URL +"",data, {
+                  headers: { Authorization: "Bearer " + localStorage.getItem('token')}
+              })
+                  .then(response => {
+                      console.log("Result delete",response);
+                      if (response.data){
+                          this.setState({isLoad:false})
+                          this.openNotificationWithIcon('success','Succès','Suppression effectuée avec succès !!!')
+                          this.getAllUsers();
+                          
+                      }else
+                          this.openNotificationWithIcon('error','Erreur','Suppression echouée !!!')
+                          this.openModalForDelMarque(false)
+      
+                  })
+                  .catch(error=> {
+                      console.log(error);
+                      this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+                  });
+          }
+          openModalForDelMarque(openModalForDelMarque){
+              this.setState({openModalForDelMarque});
+          }
+          selectForDeleteMarque =(item)=>{
+              this.setState({itemSelectedMarque: item, openModalForDelMarque:true}) // Recuperation de la ligne 
+          }
+      
+          openNotificationWithIcon = (notification,type,title,msg) => {
+            notification[type]({
+                message: title,
+                description: msg,
+            });
+        };
+  // ===========================================================================================================================================================
     render(){
       
-      const {currentAssur,visible, loading, isLoad, AssureursLoad, listAssureurs, Assureurs, currentAssureur, itemSelected} = this.state;
+      const {isLoad, AssureursLoad, itemSelected, itemSelectedAssure, itemSelectedAssureur, itemSelectedMarque} = this.state;
         const { TabPane } = Tabs;
 
   
@@ -616,7 +774,8 @@ selectForUpdateMarque =(item)=>{
                                       <td>{users.name}</td>
                                       <td>{users.email}</td>
                                       <td>
-                                        <i class='far fa-edit' style={{cursor:"pointer"}} onClick={() =>this.selectForUpdate(users)}></i>
+                                          <i class='far fa-edit' style={{cursor:"pointer"}} onClick={() =>this.selectForUpdate(users)}></i>&nbsp;
+                                          <i class='fas fa-trash' onClick={() =>this.selectForDelete(users)}></i>
                                       </td>
                                     </tr>
                                     )}
@@ -652,7 +811,8 @@ selectForUpdateMarque =(item)=>{
                                   <td>{list.name}</td>
                                   <td>{list.description}</td>
                                   <td>
-                                    <i class='far fa-edit' style={{cursor:"pointer"}} onClick={()=>this.selectForUpdateAssure(list)}></i>
+                                    <i class='far fa-edit' style={{cursor:"pointer"}} onClick={()=>this.selectForUpdateAssure(list)}></i>&nbsp;
+                                    <i class='fas fa-trash' onClick={() =>this.selectForDeleteAssure(list)}></i>
                                   </td>
                               </tr>
                               )}
@@ -693,7 +853,8 @@ selectForUpdateMarque =(item)=>{
                                     <td>{assures.address}</td>
                                     <td>
                                         {/* <i class='far fa-edit' onClick={()=>this.selectForUpdateAssureur(assures)}></i> */}
-                                        <i class='far fa-edit' style={{cursor:"pointer"}} onClick={() =>this.selectForUpdateAssureur(assures)}></i>
+                                        <i class='far fa-edit' style={{cursor:"pointer"}} onClick={() =>this.selectForUpdateAssureur(assures)}></i>&nbsp;
+                                        <i class='fas fa-trash' onClick={() =>this.selectForDeleteAssureur(assures)}></i>
 
                                     </td>
                                   </tr>
@@ -730,7 +891,8 @@ selectForUpdateMarque =(item)=>{
                                     <td>{marque.name}</td>
                                     <td>{marque.description}</td>
                                     <td>
-                                        <i class='far fa-edit' style={{cursor:"pointer"}} onClick={()=>this.selectForUpdateMarque(marque)}></i>
+                                        <i class='far fa-edit' style={{cursor:"pointer"}} onClick={()=>this.selectForUpdateMarque(marque)}></i>&nbsp;
+                                        <i class='fas fa-trash' onClick={() =>this.selectForDeleteMarque(marque)}></i>
                                     </td>
                                   </tr>
                                   )}
@@ -749,7 +911,7 @@ selectForUpdateMarque =(item)=>{
               {/* ==================== MODAL AJOUT ==================== */}
                 <Modal title="Ajout d'un nouvel Assuré !" centered visible={this.state.open}
                        onOk={this.hideAssuresModal}
-                       onCancel={this.hideAssuresModal}
+                      //  onCancel={this.hideAssuresModal}
                        footer={[ ]}>
                            
                     <form onSubmit={this.addAssures}>
@@ -779,7 +941,7 @@ selectForUpdateMarque =(item)=>{
                 {/* ==================== MODAL AJOUT ASSUREUR ==================== */}
                 <Modal title="Ajout d'un nouvel Assureur !" centered visible={this.state.visible}
                        onOk={this.hideAssureursModal}
-                       onCancel={this.hideAssureursModal}
+                      //  onCancel={this.hideAssureursModal}
                        footer={[ ]}>
                            
                     <form onSubmit={this.addAssureurs}>
@@ -811,7 +973,7 @@ selectForUpdateMarque =(item)=>{
                 {/* ==================== MODAL FOR ADD USER==================== */}
                 <Modal title="Nouvel enregistrement assuré !" centered visible={this.state.openModal}
                        onOk={()=> this.openModal(false)}
-                       onCancel={()=> this.openModal(false)}
+                      //  onCancel={()=> this.openModal(false)}
                        footer={[ ]}>
                     <form onSubmit={this.CreateNewAssurreur}>
                         <div className="container">
@@ -859,7 +1021,7 @@ selectForUpdateMarque =(item)=>{
                 <Modal title="Ajout de Marque !" centered
                       //  visible={this.state.open}
                        onOk={this.hideModal1}
-                       onCancel={this.hideModal1}
+                      //  onCancel={this.hideModal1}
                        footer={[]}
                        visible={this.state.visibles}
                        >
@@ -893,7 +1055,7 @@ selectForUpdateMarque =(item)=>{
 
                 <Modal title="Update User!" centered visible={this.state.openModalForUpd}
                        onOk={()=> this.openModalForUpd(false)}
-                       onCancel={()=> this.openModalForUpd(false)}
+                      //  onCancel={()=> this.openModalForUpd(false)}
                        footer={[ ]}>
                     <form onSubmit={this.updateData}>
                         <div>
@@ -947,7 +1109,7 @@ selectForUpdateMarque =(item)=>{
 
                 <Modal title="Update Assure!" centered visible={this.state.openModalForUpdAssure}
                        onOk={()=> this.openModalForUpdAssure(false)}
-                       onCancel={()=> this.openModalForUpdAssure(false)}
+                      //  onCancel={()=> this.openModalForUpdAssure(false)}
                        footer={[ ]}>
                     <form onSubmit={this.updateDataAssure}>
                         <div>
@@ -985,7 +1147,7 @@ selectForUpdateMarque =(item)=>{
 
                 <Modal title="Update Assureur!" centered visible={this.state.openModalForUpdAssureurs}
                        onOk={()=> this.openModalForUpdAssureurs(false)}
-                       onCancel={()=> this.openModalForUpdAssureurs(false)}
+                      //  onCancel={()=> this.openModalForUpdAssureurs(false)}
                        footer={[ ]}>
                     <form onSubmit={this.updateDataAssureurs}>
                         <div>
@@ -1029,7 +1191,7 @@ selectForUpdateMarque =(item)=>{
                 
                 <Modal title="Update Marque!" centered visible={this.state.openModalForUpdMarque}
                        onOk={()=> this.openModalForUpdMarque(false)}
-                       onCancel={()=> this.openModalForUpdMarque(false)}
+                      //  onCancel={()=> this.openModalForUpdMarque(false)}
                        footer={[ ]}>
                     <form onSubmit={this.updateDataMarque}>
                         <div>
@@ -1063,6 +1225,66 @@ selectForUpdateMarque =(item)=>{
                             </Button>
                         </div>
                     </form>
+                </Modal>
+        
+                {/* ===================== MODAL FOR DELETE User ================= */}
+                <Modal title="Suppression d'user !!! " centered visible={this.state.openModalForDel}
+                       onOk={()=> this.openModalForDel(false)}
+                       onCancel={()=> this.openModalForDel(false)}
+                       footer={[
+                           <Button key="back" style={{marginLeft:"8px"}} onClick={()=> this.openModalForDel(false)}>
+                               Annuler
+                           </Button>,
+                           <Button key="submit" type="danger" onClick={this.deleteData}>
+                               Supprimer
+                           </Button>
+                       ]}>
+                    <p> <Icon type="warning" style={{ fontSize: '34px', color: 'red' }} /> Voulez-vous vraiment supprimer {itemSelected["id"]} ?</p>
+                </Modal>
+
+                {/* ===================== MODAL FOR DELETE Assurer ================= */}
+                <Modal title="Suppression Assuré !!! " centered visible={this.state.openModalForDelAssure}
+                       onOk={()=> this.openModalForDelAssure(false)}
+                       onCancel={()=> this.openModalForDelAssure(false)}
+                       footer={[
+                           <Button key="back" style={{marginLeft:"8px"}} onClick={()=> this.openModalForDelAssure(false)}>
+                               Annuler
+                           </Button>,
+                           <Button key="submit" type="danger" onClick={this.deleteDataAssure}>
+                               Supprimer
+                           </Button>
+                       ]}>
+                    <p> <Icon type="warning" style={{ fontSize: '34px', color: 'red' }} /> Voulez-vous vraiment supprimer {itemSelectedAssure["id"]} ?</p>
+                </Modal>
+
+                {/* ===================== MODAL FOR DELETE Assureur ================= */}
+                <Modal title="Suppression Assureur!!! " centered visible={this.state.openModalForDelAssureurs}
+                       onOk={()=> this.openModalForDelAssureurs(false)}
+                       onCancel={()=> this.openModalForDelAssureurs(false)}
+                       footer={[
+                           <Button key="back" style={{marginLeft:"8px"}} onClick={()=> this.openModalForDelAssureurs(false)}>
+                               Annuler
+                           </Button>,
+                           <Button key="submit" type="danger" onClick={this.deleteDataAssureur}>
+                               Supprimer
+                           </Button>
+                       ]}>
+                    <p> <Icon type="warning" style={{ fontSize: '34px', color: 'red' }} /> Voulez-vous vraiment supprimer {itemSelectedAssureur["id"]} ?</p>
+                </Modal>
+
+                {/* ===================== MODAL FOR DELETE Marque ================= */}
+                <Modal title="Suppression Marque!!! " centered visible={this.state.openModalForDelMarque}
+                       onOk={()=> this.openModalForDelMarque(false)}
+                       onCancel={()=> this.openModalForDelMarque(false)}
+                       footer={[
+                           <Button key="back" style={{marginLeft:"8px"}} onClick={()=> this.openModalForDelMarque(false)}>
+                               Annuler
+                           </Button>,
+                           <Button key="submit" type="danger" onClick={this.deleteDataMarque}>
+                               Supprimer
+                           </Button>
+                       ]}>
+                    <p> <Icon type="warning" style={{ fontSize: '34px', color: 'red' }} /> Voulez-vous vraiment supprimer {itemSelectedMarque["id"]} ?</p>
                 </Modal>
         </div>
         );

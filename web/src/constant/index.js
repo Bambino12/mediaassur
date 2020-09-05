@@ -28,12 +28,11 @@ export const URLS = {
 }
 
 //export const API_BASE_URL = 'http://localhost:8081/api';
-export const API_BASE_URL = 'http://192.168.1.101:8080/v1';
+export const API_BASE_URL = 'http://192.168.1.100:8080/v1';
 // export const API_BASE_URL = 'http://app.diginfactory.com:8081/api';
 export const ACCESS_TOKEN = 'accessToken';
 
 export const CURRENT_USER = 'currentUser';
-
 
 export const GET_CLIENT_FILES_CTR = API_BASE_URL + "/files/get/clients/";
 export const GET_USERS_FILES_CTR = API_BASE_URL + "/files/get/users/";

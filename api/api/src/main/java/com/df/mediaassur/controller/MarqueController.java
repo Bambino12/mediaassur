@@ -51,12 +51,17 @@ public class MarqueController {
         }else{
             return ResponseEntity.ok(new ApiResponse(AppConstants.STATUS_CODE_ERROR, false, "Une erreur est survenue lors de la creation de l'assure"));
         }
-
     }
 
     //Update Marque
     @PostMapping(value = "/upd")
     public boolean upd(@RequestBody Marque marque) {
         return marqueService.update(marque);
+    }
+
+    //
+    @DeleteMapping(value = "{id}")
+    public void delete(@PathVariable Integer id){
+        marqueService.delete(id);
     }
 }

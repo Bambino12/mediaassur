@@ -81,6 +81,16 @@ public class AttestationController {
     }
 
 
+    @PostMapping(value = "/updateAttestations")
+    public void update(@RequestBody Attestation attestation){
+        attestationRepository.save(attestation);
+    }
+    //Update Marque
+//    @PostMapping(value = "/upd")
+//    public boolean update(@RequestBody Attestation attestation) {
+//        return attestationRepository.update(attestation);
+//    }
+
 
 
 

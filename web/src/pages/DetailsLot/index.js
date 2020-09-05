@@ -25,14 +25,13 @@ function CategoryList(props) {
     const { hasRole } = props
 
     const [state, setState] = useState({
-
+        open: false,
         isLoading: false,
         isUpdateDrawerVisible: false,
         isAddDrawerVisible: false,
         currentItem: {},
         lot: [],
         input: "",
-        // inputJaune: "",
         infolot: [],
         visible: false,
         currentLot: [],
@@ -40,6 +39,7 @@ function CategoryList(props) {
         printCode: "",
         cedeaoModalvisible: false,
         single: false,
+        modale:false,
         attestations: parseJSON(localStorage.getItem("attestation")),
         btnLoadAjaune: false,
         btnLoadACedeao: false,
@@ -48,6 +48,9 @@ function CategoryList(props) {
         singlelotId: localStorage.getItem('lotId'),
         impressionStatutCedeao: false,
         impressionStatutJaune: false,
+        openModalForUpd:false,
+        currentModif: {},
+        attestationList :[]
         // attestations: currentLot.attestations,
     })
 
@@ -246,13 +249,24 @@ function CategoryList(props) {
             )
         },
         {
-            title: 'Action', width: 50, key: '22', dataIndex: "action", fixed: "right",
+            title: 'Action', width: 60, key: '22', dataIndex: "action", fixed: "right",
             render: (text, item) => (
                 <Fragment>
                     <PrinterOutlined
                         onClick={() => {
                             localStorage.setItem("currentAttestationSelected", JSON.stringify(item));
                             setState(state => ({ ...state, single: true }));
+                        }}
+                        style={{margin:"5px"}}
+                    />
+                    <EditOutlined
+                        style={{cursor:"pointer"}} 
+                        // onClick={()=> {selectForUpdate()
+                        //     setState(state => ({ ...state, openModalForUpd: true }))
+                        // }}
+                        onClick={() => {
+                            localStorage.setItem("selectForUpdate", JSON.stringify(text));
+                            setState(state => ({ ...state, openModalForUpd: true }));
                         }}
                     />
                 </Fragment>
@@ -298,8 +312,125 @@ function CategoryList(props) {
 
     }
 
+    // ============================== FUNCTION FOR UPDATE =======================
+    // function onFinish(values){
+    //     let objRequest = Object.assign({}, values);
+    //     objRequest.status = 1;
+    //     let lot={
+    //       assure: objRequest.assure,
+    //       genre: objRequest.genre,
+    //       immatriculation: objRequest.immatriculation,
+    //       lotId: objRequest.lot_id,
+    //       marque: objRequest.marque,
+    //       usage: objRequest.usage,
+    //       statusCedeao: 0,
+    //       statusJaune: 0,
+    //     };
+        
+    //     console.log('element saisi ', lot);
+    //     // console.log('list lots ', state.lots);
+    //     axios.post(API_BASE_URL + "/attestations", lot)
+    //       .then(response => {
+    //           //console.log("Response d'ajout d'attestation", response);
+    //           if (response.data){
+    //             notification.success({
+    //               message: 'Mediassur App',
+    //               description: 'Enregistrement effectué avec succès !!!'
+    //             }); 
+    //             // handleClose();
+    //             getAllLots();            
+    //           }else
+    //           notification.warning({
+    //             message: 'Mediassur App',
+    //             description: 'Enregistrement echoué !!!'
+    //           });  
+    //         //   handleCloseModal();
+    
+    //           // this.hideAssureursModal();
+    
+    //       })
+    //       .catch(error=> {
+    //           console.log(error);
+    //           notification.warning({
+    //                   message: 'Mediassur App',
+    //                   description: 'Erreur cote client'
+    //                 });
+    //      });
+    //   }
+
+    function updateAttestation(e) {
+        e.preventDefault();
+        const warning200 = (message) => {
+          message.success('Succès','Modification effectué avec succès !!!');
+        };
+        const warning = (message) => {
+          message.warning('Erreur','Enregistrement echoué !!!');
+        };
+      
+        const warning400 = (message) => {
+          message.warning('Erreur coté client !!!');
+        };
+      
+        let newdata = state.currentModif;
+      
+        console.log(newdata);
+        axios.post(API_BASE_URL + '/attestations//updateAttestations',newdata, {
+            headers: { Authorization: "Bearer" + localStorage.getItem('token')}
+        })
+            .then(response => {
+                console.log(response);
+                if (response){
+                  warning200();
+                //   this.getAllAssureurs();
+      
+                }else
+                  warning();
+                //   this.hideModalUpdAssureurs(false)
+            })
+            .catch(error=> {
+                console.log(error);
+                  warning400();
+                //   this.hideModalUpdAssureurs(false)
+            });
+      }
+
+    // modif
+    function openModalForUpd(openModalForUpd) {
+        if (openModalForUpd) {
+            setState(state => ({ ...state, openModalForUpd: false }))
+        }
+        else {
+            setState(state => ({ ...state, openModalForUpd: true }))
+        }
+
+    }
+
+    function selectForUpdate (item){
+        setState({currentModif: item, openModalForUpd:true}) // Recuperation de la ligne
+      }
+
+    function  handleChangeMod (e) {
+        let {name, value} = e.target //
+        setState(state => {
+            const newState = { ...state, currentModif: {...state.currentModif, [name]:value}} // Ici je demande a me ramener les anciennes valeurs pour pouvoir l'ecrasser par la nouvelle valeur
+            return newState // Recuperation de la new valeur
+        })
+      }
+    // openModalForUpd(openModalForUpd){
+    //     if (openModalForUpd){
+    //         setState({openModalForUpd});
+    //     }
+    //     else{
+      
+    //         setState({openModalForUpd});
+    //     }
+    //   }
+
     function annuleSingleBtnLoader() {
         setState(state => ({ ...state, singleBtnLoad: false }))
+    }
+    function annuler() {
+        setState(state => ({ ...state, singleBtn: false }))
     }
 
     function showModalJaune() {
@@ -337,8 +468,19 @@ function CategoryList(props) {
         }));
     };
 
+    function hideModal() {
+        setState(state => ({
+            ...state,
+            openModalForUpd: false,
+        }));
+    };
+
     function openLinkCedeao() {
         window.open(localStorage.getItem('lienCedeao'))
+    }
+
+    function openLink() {
+        window.open(localStorage.getItem('modal'))
     }
 
     function openLinkJaune() {
@@ -522,10 +664,10 @@ function CategoryList(props) {
                         printAttestations("jaune");
                     }}>Valider</Button>
                 ]}
-                onCancel={() => {
-                    hideModalJaune();
-                    annulebtnLoader();
-                }}
+                // onCancel={() => {
+                //     hideModalJaune();
+                //     annulebtnLoader();
+                // }}
             //   okText="Valider"
             //   cancelText="Annuler"
             >
@@ -535,9 +677,7 @@ function CategoryList(props) {
             <Modal
                 title="Attribution de numero aux attestation CEDEAO"
                 visible={state.cedeaoModalvisible}
-                //   onOk={()=>{
-                //     printAttestations("cedeao");
-                //   }}
+            
                 footer={[
                     <Button loading={loaderCedeao} type="danger" onClick={() => {
                         hideModalCedeao();
@@ -548,10 +688,10 @@ function CategoryList(props) {
                         activebtnLoaderCedeao();
                     }}>Valider</Button>
                 ]}
-                onCancel={() => {
-                    annulebtnLoaderCedeao();
-                    hideModalCedeao();
-                }}
+                // onCancel={() => {
+                //     annulebtnLoaderCedeao();
+                //     hideModalCedeao();
+                // }}
             //   okText="Valider"
             //   cancelText="Annuler"
             >
@@ -565,10 +705,10 @@ function CategoryList(props) {
                 //   onOk={()=>{
                 //     //printSingleAttestations();
                 //   }}
-                onCancel={() => {
-                    hideModalSingleAttestation();
-                    annuleSingleBtnLoader();
-                }}
+                // onCancel={() => {
+                //     hideModalSingleAttestation();
+                //     annuleSingleBtnLoader();
+                // }}
                 //   okText="Valider"
                 //   cancelText="Annuler"
                 footer={[
@@ -581,6 +721,58 @@ function CategoryList(props) {
                 <Input type="text" name='text' placeholder="Entrez un numero" onChange={handleChange} />
 
             </Modal>
+        
+        {/* -===================== */}
+        <Modal
+                title="Modifier l'attestation"
+                // visible={state.modale}
+                centered visible={state.openModalForUpd}
+                footer={[]}
+            >
+                <form onSubmit={updateAttestation}>
+                    <div>
+                        <div className="form-row" >
+                            <div className="col form-group">
+                                <label><strong>Assure</strong></label>
+                                <input value={state.currentModif.assure} onChange={handleChangeMod} id="assure" name="assure" type="text" className="form-control form-control-sm" required/>
+                            </div>
+                        </div>
+                        <div className="form-row" >
+                            <div className="col form-group">
+                                <label><strong>Marque</strong></label>
+                                <input value={state.currentModif.marque} onChange={handleChangeMod} id="marque" name="marque" type="text" className="form-control form-control-sm" required/>
+                            </div>
+                        </div>
+                        <div className="form-row" >
+                            <div className="col form-group">
+                                <label><strong>Immatriculation</strong></label>
+                                <input value={state.currentModif.immatriculation} onChange={handleChangeMod} id="immatriculation" name="immatriculation" type="text" className="form-control form-control-sm" required/>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="col form-group">
+                                <label><strong>Usage</strong></label>
+                                <input value={state.currentModif.usage} onChange={handleChangeMod} id="usage"  name="usage" type="text" className="form-control form-control-sm" required />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="col form-group">
+                                <label><strong>Genre</strong></label>
+                                <input value={state.currentModif.genre} onChange={handleChangeMod} id="genre" name="genre" type="text" className="form-control form-control-sm" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="text-right w-100">
+                        <Button onClick={() => { hideModal() }}>
+                            Annuler
+                        </Button> &nbsp;
+                        <Button type="primary" htmlType="submit">
+                            Modifier
+                        </Button>
+                    </div>
+                </form>
+            </Modal>
+        
         </Fragment>
     )
 }
