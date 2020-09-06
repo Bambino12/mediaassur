@@ -3,7 +3,7 @@ import { Tabs, Card, Spin } from 'antd';
 import { Table, Button, Modal, Input, message} from 'antd';
 //import { api_getAssures, api_addAssures, api_getAssureurs, api_getUser } from '../urlApi';
 import axios from "axios";
-import Icon, { EditOutlined, DeleteOutlined, PlusOutlined, PrinterOutlined } from '@ant-design/icons';
+import Icon, { EditOutlined, DeleteOutlined, PlusOutlined, PrinterOutlined, HeatMapOutlined } from '@ant-design/icons';
 //import { DataTable } from 'pages/Rapport/DataTable';
 import {API_BASE_URL} from '../../constant'
 //import DataTable from './DataTable';
@@ -648,11 +648,11 @@ selectForUpdateMarque =(item)=>{
                   this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
               });
       }
-      openModalForDelAssureurs(openModalUpdAssureurs){
-          this.setState({openModalUpdAssureurs});
+      openModalForDelAssureurs(openModalForDelAssureurs){
+          this.setState({openModalForDelAssureurs});
       }
       selectForDeleteAssureur =(item)=>{
-          this.setState({itemSelectedAssureur: item, openModalUpdAssureurs:true}) // Recuperation de la ligne 
+          this.setState({itemSelectedAssureur: item, openModalForDelAssureurs:true}) // Recuperation de la ligne 
       }
   
       openNotificationWithIcon = (notification,type,title,msg) => {
@@ -662,7 +662,7 @@ selectForUpdateMarque =(item)=>{
         });
     };
 
-          // =============================== FUNCTION DELETE ASSURER=================================================
+    // =============================== FUNCTION DELETE ASSURER=================================================
           deleteDataAssure = () => {
             let data =  this.state.itemSelectedAssure
             console.log(data)
@@ -700,7 +700,7 @@ selectForUpdateMarque =(item)=>{
           });
       };
 
-            // =============================== FUNCTION DELETE USER =================================================
+  // =============================== FUNCTION DELETE USER =================================================
             deleteDataMarque = () => {
               let data =  this.state.itemSelectedMarque
               console.log(data)
@@ -737,7 +737,9 @@ selectForUpdateMarque =(item)=>{
                 description: msg,
             });
         };
-  // ===========================================================================================================================================================
+
+  // ===============================================================================================================================================================
+
     render(){
       
       const {isLoad, AssureursLoad, itemSelected, itemSelectedAssure, itemSelectedAssureur, itemSelectedMarque} = this.state;
@@ -775,7 +777,7 @@ selectForUpdateMarque =(item)=>{
                                       <td>{users.email}</td>
                                       <td>
                                           <i class='far fa-edit' style={{cursor:"pointer"}} onClick={() =>this.selectForUpdate(users)}></i>&nbsp;
-                                          <i class='fas fa-trash' onClick={() =>this.selectForDelete(users)}></i>
+                                          <i class='fas fa-trash' style={{cursor:"pointer"}} onClick={() =>this.selectForDelete(users)}></i>
                                       </td>
                                     </tr>
                                     )}
@@ -812,7 +814,7 @@ selectForUpdateMarque =(item)=>{
                                   <td>{list.description}</td>
                                   <td>
                                     <i class='far fa-edit' style={{cursor:"pointer"}} onClick={()=>this.selectForUpdateAssure(list)}></i>&nbsp;
-                                    <i class='fas fa-trash' onClick={() =>this.selectForDeleteAssure(list)}></i>
+                                    <i class='fas fa-trash' style={{cursor:"pointer"}} onClick={() =>this.selectForDeleteAssure(list)}></i>
                                   </td>
                               </tr>
                               )}
@@ -854,7 +856,7 @@ selectForUpdateMarque =(item)=>{
                                     <td>
                                         {/* <i class='far fa-edit' onClick={()=>this.selectForUpdateAssureur(assures)}></i> */}
                                         <i class='far fa-edit' style={{cursor:"pointer"}} onClick={() =>this.selectForUpdateAssureur(assures)}></i>&nbsp;
-                                        <i class='fas fa-trash' onClick={() =>this.selectForDeleteAssureur(assures)}></i>
+                                        <i class='fas fa-trash' style={{cursor:"pointer"}} onClick={() =>this.selectForDeleteAssureur(assures)}></i>
 
                                     </td>
                                   </tr>
@@ -892,7 +894,7 @@ selectForUpdateMarque =(item)=>{
                                     <td>{marque.description}</td>
                                     <td>
                                         <i class='far fa-edit' style={{cursor:"pointer"}} onClick={()=>this.selectForUpdateMarque(marque)}></i>&nbsp;
-                                        <i class='fas fa-trash' onClick={() =>this.selectForDeleteMarque(marque)}></i>
+                                        <i class='fas fa-trash' style={{cursor:"pointer"}} onClick={() =>this.selectForDeleteMarque(marque)}></i>
                                     </td>
                                   </tr>
                                   )}
@@ -1062,7 +1064,7 @@ selectForUpdateMarque =(item)=>{
                             <div className="form-row" >
                                 <div className="col form-group">
                                     <label><strong> ID : </strong></label>
-                                    <input id="iduser" name="name" type="text" value={this.state.currentUser.id} onChange={this.handleChange} className="form-control form-control-sm" required/>
+                                    <input id="iduser" name="name" type="text" value={this.state.currentUser.id} className="form-control form-control-sm" required/>
                                 </div>
                             </div>
                             <div className="form-row" >
@@ -1116,7 +1118,7 @@ selectForUpdateMarque =(item)=>{
                             <div className="form-row" >
                                 <div className="col form-group">
                                     <label><strong> ID : </strong></label>
-                                    <input id="iduser" name="name" type="text" value={this.state.currentAssur.id} onChange={this.handleChangeAssure} className="form-control form-control-sm" required/>
+                                    <input id="iduser" name="name" type="text" value={this.state.currentAssur.id} className="form-control form-control-sm" required/>
                                 </div>
                             </div>
                             <div className="form-row" >
@@ -1154,7 +1156,7 @@ selectForUpdateMarque =(item)=>{
                             <div className="form-row" >
                                 <div className="col form-group">
                                     <label><strong> ID : </strong></label>
-                                    <input id="idassure" name="idassure" type="text" value={this.state.currentAssureur.id} onChange={this.handleChangeAssureur} className="form-control form-control-sm" required/>
+                                    <input id="idassure" name="idassure" value={this.state.currentAssureur.id} className="form-control form-control-sm" required/>
                                 </div>
                             </div>
                             <div className="form-row" >
@@ -1199,7 +1201,7 @@ selectForUpdateMarque =(item)=>{
                                 <div className="col form-group">
                                   {/* <input disabled="true" id="idmarque" value={this.state.currentMarque.id}></input> */}
                                     <label><strong> ID : </strong></label>
-                                    <input id="iduser" type="text" name="name" value={this.state.currentMarque.id} onChange={this.handleChangeMarque} className="form-control form-control-sm" required />
+                                    <input id="iduser" type="text" name="name" value={this.state.currentMarque.id} className="form-control form-control-sm" required />
                                 </div>
                             </div>
                             <div className="form-row">
@@ -1230,7 +1232,7 @@ selectForUpdateMarque =(item)=>{
                 {/* ===================== MODAL FOR DELETE User ================= */}
                 <Modal title="Suppression d'user !!! " centered visible={this.state.openModalForDel}
                        onOk={()=> this.openModalForDel(false)}
-                       onCancel={()=> this.openModalForDel(false)}
+                      //  onCancel={()=> this.openModalForDel(false)}
                        footer={[
                            <Button key="back" style={{marginLeft:"8px"}} onClick={()=> this.openModalForDel(false)}>
                                Annuler
@@ -1239,13 +1241,13 @@ selectForUpdateMarque =(item)=>{
                                Supprimer
                            </Button>
                        ]}>
-                    <p> <Icon type="warning" style={{ fontSize: '34px', color: 'red' }} /> Voulez-vous vraiment supprimer {itemSelected["id"]} ?</p>
+                    <p> <HeatMapOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelected["id"]} ?</p>
                 </Modal>
 
                 {/* ===================== MODAL FOR DELETE Assurer ================= */}
                 <Modal title="Suppression Assuré !!! " centered visible={this.state.openModalForDelAssure}
                        onOk={()=> this.openModalForDelAssure(false)}
-                       onCancel={()=> this.openModalForDelAssure(false)}
+                      //  onCancel={()=> this.openModalForDelAssure(false)}
                        footer={[
                            <Button key="back" style={{marginLeft:"8px"}} onClick={()=> this.openModalForDelAssure(false)}>
                                Annuler
@@ -1254,13 +1256,13 @@ selectForUpdateMarque =(item)=>{
                                Supprimer
                            </Button>
                        ]}>
-                    <p> <Icon type="warning" style={{ fontSize: '34px', color: 'red' }} /> Voulez-vous vraiment supprimer {itemSelectedAssure["id"]} ?</p>
+                    <p> <HeatMapOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelectedAssure["id"]} ?</p>
                 </Modal>
 
                 {/* ===================== MODAL FOR DELETE Assureur ================= */}
                 <Modal title="Suppression Assureur!!! " centered visible={this.state.openModalForDelAssureurs}
                        onOk={()=> this.openModalForDelAssureurs(false)}
-                       onCancel={()=> this.openModalForDelAssureurs(false)}
+                      //  onCancel={()=> this.openModalForDelAssureurs(false)}
                        footer={[
                            <Button key="back" style={{marginLeft:"8px"}} onClick={()=> this.openModalForDelAssureurs(false)}>
                                Annuler
@@ -1269,13 +1271,13 @@ selectForUpdateMarque =(item)=>{
                                Supprimer
                            </Button>
                        ]}>
-                    <p> <Icon type="warning" style={{ fontSize: '34px', color: 'red' }} /> Voulez-vous vraiment supprimer {itemSelectedAssureur["id"]} ?</p>
+                    <p><HeatMapOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelectedAssureur["id"]} ?</p>
                 </Modal>
 
                 {/* ===================== MODAL FOR DELETE Marque ================= */}
                 <Modal title="Suppression Marque!!! " centered visible={this.state.openModalForDelMarque}
                        onOk={()=> this.openModalForDelMarque(false)}
-                       onCancel={()=> this.openModalForDelMarque(false)}
+                      //  onCancel={()=> this.openModalForDelMarque(false)}
                        footer={[
                            <Button key="back" style={{marginLeft:"8px"}} onClick={()=> this.openModalForDelMarque(false)}>
                                Annuler
@@ -1284,7 +1286,7 @@ selectForUpdateMarque =(item)=>{
                                Supprimer
                            </Button>
                        ]}>
-                    <p> <Icon type="warning" style={{ fontSize: '34px', color: 'red' }} /> Voulez-vous vraiment supprimer {itemSelectedMarque["id"]} ?</p>
+                    <p><HeatMapOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelectedMarque["id"]} ?</p>
                 </Modal>
         </div>
         );

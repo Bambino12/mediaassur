@@ -244,7 +244,7 @@ function CategoryList(props) {
             width: 250,
             render: (item) => (
                 <div>
-                    <td>{item.statusCedeao == 0 ? <Tag color="blue">Cedeao non generée  </Tag> : item.statusCedeao == 1 ? <Tag color="green">Cedeao generée</Tag> : <Tag color="red">Cedeao Annulée</Tag>}</td> <td>{item.statusJaune == 0 ? <Tag color="blue">Jaune non generée</Tag> : item.statusJaune == 1 ? <Tag color="green">Jaune generée</Tag> : <Tag color="red">Jaune Annulée</Tag>}</td>
+                    <td>{item.statusCedeao == 0 ? <Tag color="blue">Cedeao non generée</Tag> : item.statusCedeao == 1 ? <Tag color="green">Cedeao generée</Tag> : <Tag color="red">Cedeao Annulée</Tag>}</td> <td>{item.statusJaune == 0 ? <Tag color="blue">Jaune non generée</Tag> : item.statusJaune == 1 ? <Tag color="green">Jaune generée</Tag> : <Tag color="red">Jaune Annulée</Tag>}</td>
                 </div>
             )
         },
@@ -274,6 +274,13 @@ function CategoryList(props) {
         }
     ];
 
+    const openNotificationWithIcon = (type,title,msg) => {
+        notification[type]({
+            message: title,
+            description: msg,
+        });
+    };
+    
     function activebtnLoader() {
         if (state.input === "") {
             setState(state => ({ ...state, btnLoadAjaune: false }))
@@ -312,52 +319,7 @@ function CategoryList(props) {
 
     }
 
-    // ============================== FUNCTION FOR UPDATE =======================
-    // function onFinish(values){
-    //     let objRequest = Object.assign({}, values);
-    //     objRequest.status = 1;
-    //     let lot={
-    //       assure: objRequest.assure,
-    //       genre: objRequest.genre,
-    //       immatriculation: objRequest.immatriculation,
-    //       lotId: objRequest.lot_id,
-    //       marque: objRequest.marque,
-    //       usage: objRequest.usage,
-    //       statusCedeao: 0,
-    //       statusJaune: 0,
-    //     };
-        
-    //     console.log('element saisi ', lot);
-    //     // console.log('list lots ', state.lots);
-    //     axios.post(API_BASE_URL + "/attestations", lot)
-    //       .then(response => {
-    //           //console.log("Response d'ajout d'attestation", response);
-    //           if (response.data){
-    //             notification.success({
-    //               message: 'Mediassur App',
-    //               description: 'Enregistrement effectué avec succès !!!'
-    //             }); 
-    //             // handleClose();
-    //             getAllLots();            
-    //           }else
-    //           notification.warning({
-    //             message: 'Mediassur App',
-    //             description: 'Enregistrement echoué !!!'
-    //           });  
-    //         //   handleCloseModal();
-    
-    //           // this.hideAssureursModal();
-    
-    //       })
-    //       .catch(error=> {
-    //           console.log(error);
-    //           notification.warning({
-    //                   message: 'Mediassur App',
-    //                   description: 'Erreur cote client'
-    //                 });
-    //      });
-    //   }
-
+    // ============================================ Function Update ================================================
     function updateAttestation(e) {
         e.preventDefault();
         const warning200 = (message) => {
@@ -390,7 +352,7 @@ function CategoryList(props) {
             .catch(error=> {
                 console.log(error);
                   warning400();
-                //   this.hideModalUpdAssureurs(false)
+                //  this.hideModalUpdAssureurs(false)
             });
       }
 
@@ -405,9 +367,9 @@ function CategoryList(props) {
 
     }
 
-    function selectForUpdate (item){
-        setState({currentModif: item, openModalForUpd:true}) // Recuperation de la ligne
-      }
+    // function selectForUpdate (item){
+    //     setState({currentModif: item, openModalForUpd:true}) // Recuperation de la ligne
+    //   }
 
     function  handleChangeMod (e) {
         let {name, value} = e.target //
@@ -416,6 +378,39 @@ function CategoryList(props) {
             return newState // Recuperation de la new valeur
         })
       }
+
+          // =============================== FUNCTION DELETE =================================================
+    // function deleteData(){
+    //     let data =  this.state.itemSelected
+    //     console.log(data)
+    //     axios.post(API_delMauto,data, {
+    //         headers: { Authorization: "Bearer " + localStorage.getItem('token')}
+    //     })
+    //         .then(response => {
+    //             console.log("Result delete",response);
+    //             if (response.data){
+    //                 this.setState({isLoad:false})
+    //                 this.openNotificationWithIcon('success','Succès','Suppression effectuée avec succès !!!')
+    //                 this.getAllAuto();
+                    
+    //             }else
+    //                 this.openNotificationWithIcon('error','Erreur','Suppression echouée !!!')
+
+    //             this.openModalForDel(false)
+
+    //         })
+    //         .catch(error=> {
+    //             console.log(error);
+    //             this.openNotificationWithIcon('error','Erreur','Erreur coté client !!!')
+    //         });
+    // }
+    //  openModalForDel = (openModalForDel) =>{
+    //     this.setState({openModalForDel});
+    // }
+    // selectForDelete = (item) => {
+    //     this.setState({itemSelected: item, openModalForDel:true}) // Recuperation de la ligne 
+    // }
+///////////////////////////////////////////////////////////////////////////////////
     // openModalForUpd(openModalForUpd){
     //     if (openModalForUpd){
     //         setState({openModalForUpd});

@@ -60,8 +60,8 @@ public class MarqueController {
     }
 
     //
-    @DeleteMapping(value = "{id}")
-    public void delete(@PathVariable Integer id){
-        marqueService.delete(id);
-    }
+//    @DeleteMapping(value = "{id}")
+//    public void delete(@PathVariable Integer id){
+//        marqueService.delete(id);
+//    }
 }
