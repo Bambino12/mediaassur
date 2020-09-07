@@ -3,7 +3,7 @@ import { Tabs, Card, Spin } from 'antd';
 import { Table, Button, Modal, Input, message} from 'antd';
 //import { api_getAssures, api_addAssures, api_getAssureurs, api_getUser } from '../urlApi';
 import axios from "axios";
-import Icon, { EditOutlined, DeleteOutlined, PlusOutlined, PrinterOutlined, HeatMapOutlined } from '@ant-design/icons';
+import Icon, { EditOutlined, DeleteOutlined, PlusOutlined, PrinterOutlined, HeatMapOutlined, WarningOutlined} from '@ant-design/icons';
 //import { DataTable } from 'pages/Rapport/DataTable';
 import {API_BASE_URL} from '../../constant'
 //import DataTable from './DataTable';
@@ -43,7 +43,6 @@ class Parametre extends Component {
       openModalForDelMarque:false,
   };
 
- 
 componentDidMount() {
     this.getAllAssures();
     this.getAllAssureurs();
@@ -51,9 +50,11 @@ componentDidMount() {
     this.getAllMarque();
     
 }
+
 openModal = (openModal) => {
   this.setState({openModal});
 }
+
 getAllAssures(){
   axios.get(API_BASE_URL  + '/assures')
       .then(res=>{
@@ -1241,7 +1242,7 @@ selectForUpdateMarque =(item)=>{
                                Supprimer
                            </Button>
                        ]}>
-                    <p> <HeatMapOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelected["id"]} ?</p>
+                    <p> <WarningOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelected["id"]} ?</p>
                 </Modal>
 
                 {/* ===================== MODAL FOR DELETE Assurer ================= */}
@@ -1256,7 +1257,7 @@ selectForUpdateMarque =(item)=>{
                                Supprimer
                            </Button>
                        ]}>
-                    <p> <HeatMapOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelectedAssure["id"]} ?</p>
+                    <p> <WarningOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelectedAssure["id"]} ?</p>
                 </Modal>
 
                 {/* ===================== MODAL FOR DELETE Assureur ================= */}
@@ -1271,7 +1272,7 @@ selectForUpdateMarque =(item)=>{
                                Supprimer
                            </Button>
                        ]}>
-                    <p><HeatMapOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelectedAssureur["id"]} ?</p>
+                    <p><WarningOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelectedAssureur["id"]} ?</p>
                 </Modal>
 
                 {/* ===================== MODAL FOR DELETE Marque ================= */}
@@ -1286,7 +1287,7 @@ selectForUpdateMarque =(item)=>{
                                Supprimer
                            </Button>
                        ]}>
-                    <p><HeatMapOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelectedMarque["id"]} ?</p>
+                    <p><WarningOutlined type="warning" style={{ fontSize: '34px', color: 'red' }}/> Voulez-vous vraiment supprimer {itemSelectedMarque["id"]} ?</p>
                 </Modal>
         </div>
         );

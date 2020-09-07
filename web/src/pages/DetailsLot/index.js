@@ -266,7 +266,7 @@ function CategoryList(props) {
                         // }}
                         onClick={() => {
                             localStorage.setItem("selectForUpdate", JSON.stringify(text));
-                            setState(state => ({ ...state, openModalForUpd: true }));
+                            setState(state => ({ ...state, openModalForUpd: true, currentModif:item }));
                         }}
                     />
                 </Fragment>
@@ -274,7 +274,7 @@ function CategoryList(props) {
         }
     ];
 
-    const openNotificationWithIcon = (type,title,msg) => {
+    function openNotificationWithIcon (type,title,msg) {
         notification[type]({
             message: title,
             description: msg,

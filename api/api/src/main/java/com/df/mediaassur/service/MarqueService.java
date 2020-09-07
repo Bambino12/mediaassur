@@ -79,4 +79,13 @@ public class MarqueService {
     public MarqueResponse getById(Integer marqueId){
         return modelMapper.mapMarqueToMarqueResponse(marqueRepository.getOne(marqueId));
     }
+    public Boolean delete(int id) {
+        Marque marqueRepository = new Marque(id);
+        int index = data.indexOf(marqueRepository);
+        if (index>=0){
+            data.remove(index);
+            return true;
+        }
+        return false;
+    }
 }
