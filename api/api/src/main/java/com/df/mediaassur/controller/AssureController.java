@@ -72,6 +72,7 @@ public class AssureController {
     //Update Assure
     @PostMapping(value = "/upd")
     public boolean upd(@RequestBody Assure assure) {
+
         return assureService.update(assure);
     }
 
@@ -87,5 +88,9 @@ public class AssureController {
 //        return assureService.
 //    }
 
+//    SUPPRESSION D'ASSURER
+    public void Assure(int id){
+        assureService.deleteById(id);
 
+    }
 }

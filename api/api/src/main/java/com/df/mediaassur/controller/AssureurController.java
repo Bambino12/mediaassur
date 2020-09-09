@@ -3,7 +3,7 @@ package com.df.mediaassur.controller;
 import com.df.mediaassur.model.Assureur;
 import com.df.mediaassur.payload.*;
 import com.df.mediaassur.repository.LotRepository;
-import com.df.mediaassur.service.AssureService;
+//import com.df.mediaassur.service.AssureService;
 import com.df.mediaassur.service.AssureurService;
 import com.df.mediaassur.service.LotService;
 import com.df.mediaassur.util.AppConstants;
@@ -73,10 +73,13 @@ public class AssureurController {
     //Update Assureur
     @PostMapping(value = "/upd")
     public boolean upd(@RequestBody Assureur assureur) {
+
         return assureurService.update(assureur);
     }
 
-
-
-
+//////SUPPRRESSION ASSUREUR
+    @DeleteMapping(value = "/deleteAssureur")
+    public void delete(int id){
+         assureurService.deleteById(id);
+    }
 }

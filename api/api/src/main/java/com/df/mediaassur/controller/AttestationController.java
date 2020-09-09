@@ -91,9 +91,10 @@ public class AttestationController {
 //        return attestationRepository.update(attestation);
 //    }
 
-
-
-
-
+    //    SUPPRESSION
+    @DeleteMapping(value = "/deleteAttestation")
+    public void delete(int id){
+        attestationRepository.deleteById(id);
+    }
 
 }

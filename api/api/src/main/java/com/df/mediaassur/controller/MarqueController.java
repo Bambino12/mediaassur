@@ -59,9 +59,14 @@ public class MarqueController {
         return marqueService.update(marque);
     }
 
-    //
+//    //
 //    @DeleteMapping(value = "{id}")
 //    public void delete(@PathVariable Integer id){
 //        marqueService.delete(id);
 //    }
+//
+    @DeleteMapping(value = "/deleteMarque")
+    public void delete(int id){
+        marqueRepository.deleteById(id);
+    }
 }

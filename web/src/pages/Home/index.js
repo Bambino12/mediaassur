@@ -49,7 +49,7 @@ function UserList(props) {
                     list[i]["key"]=i; // add property key = 1
                     list[i]["nbAttestation"]=list[i]["attestations"].length;
                 }
-                for (var i =0;i <list.length; i++) {
+                for (var i = 0; i <list.length; i++ ) {
                     if(list[i].status===1){
                         let status = list[i].status;
                         // console.log('le status de l attestion ', i , ' est: ', status);

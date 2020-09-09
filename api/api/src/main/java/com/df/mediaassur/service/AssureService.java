@@ -95,5 +95,7 @@ public class AssureService {
     }
 
 
-
+    public void deleteById(int id) {
+        assureRepository.deleteById(id);
+    }
 }

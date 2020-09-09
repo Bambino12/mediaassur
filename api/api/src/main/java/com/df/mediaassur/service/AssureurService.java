@@ -91,6 +91,8 @@ public class AssureurService {
        return modelMapper.mapAssureurToAssureurResponse(assureurRepository.getOne(assureId));
     }
 
-
-
+// Suprimer l'assureur
+    public void deleteById(int id) {
+        assureurRepository.deleteById(id);
+    }
 }
