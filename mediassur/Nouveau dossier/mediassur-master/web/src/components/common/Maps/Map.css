@@ -1,0 +1,15 @@
+.mapLegende{
+    float: right;
+}
+
+.mapLegende >  li {
+    display: inline-block;
+    margin-right: 15px;
+    font-family: "Montserrat-Regular";
+    color: "#ccc"
+}
+
+.mapLegende >  li > i {
+    color: black !important;
+    font-size: 15px !important;
+}
